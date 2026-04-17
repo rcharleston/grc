@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>grcengineer.io</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='10' fill='%235b7bff'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0d0f;
+  --bg2: #111318;
+  --bg3: #181b22;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #e8eaf0;
+  --text2: #8a8f9e;
+  --text3: #555b6e;
+  --accent: #5b7bff;
+  --accent2: #3d5ce0;
+  --accent-dim: rgba(91,123,255,0.12);
+  --accent-dim2: rgba(91,123,255,0.06);
+  --green: #3ecf8e;
+  --green-dim: rgba(62,207,142,0.1);
+  --amber: #f5a623;
+  --amber-dim: rgba(245,166,35,0.1);
+  --rose: #ff6b8a;
+  --rose-dim: rgba(255,107,138,0.1);
+  --mono: 'DM Mono', monospace;
+  --serif: 'Instrument Serif', serif;
+  --sans: 'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+/* ── NOISE TEXTURE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+}
+
+/* ── SCANLINE ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.015) 2px, rgba(0,0,0,0.015) 4px);
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(12,13,15,0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-logo-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse-dot 3s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(91,123,255,0.4); }
+  50% { opacity: 0.8; box-shadow: 0 0 0 6px rgba(91,123,255,0); }
+}
+
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text2);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+.nav-cta {
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 8px 18px;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  color: var(--text);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: all 0.2s;
+  background: transparent;
+}
+
+.nav-cta:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 120px 48px 80px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* grid bg */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+}
+
+/* glow */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 400px;
+  background: radial-gradient(ellipse, rgba(91,123,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  animation: fadein 0.6s ease both;
+}
+
+.eyebrow-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  padding: 5px 12px;
+  border: 1px solid rgba(91,123,255,0.3);
+  border-radius: 2px;
+  background: var(--accent-dim2);
+}
+
+.eyebrow-line {
+  height: 1px;
+  width: 60px;
+  background: linear-gradient(90deg, rgba(91,123,255,0.4), transparent);
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(52px, 7vw, 96px);
+  font-weight: 400;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 8px;
+  animation: fadein 0.7s ease 0.1s both;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--text2);
+}
+
+.hero-sub {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  margin-bottom: 28px;
+  animation: fadein 0.7s ease 0.2s both;
+}
+
+.hero-desc {
+  font-size: 16px;
+  color: var(--text2);
+  line-height: 1.8;
+  max-width: 560px;
+  margin-bottom: 48px;
+  animation: fadein 0.7s ease 0.3s both;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  animation: fadein 0.7s ease 0.4s both;
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  padding: 12px 24px;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-ghost:hover { color: var(--text); border-color: var(--border2); background: rgba(255,255,255,0.03); }
+
+/* hero terminal */
+.hero-terminal {
+  position: absolute;
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 400px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 2;
+  animation: fadein 0.8s ease 0.5s both;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--border);
+}
+
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 12px 16px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+}
+
+.t-dot { width: 10px; height: 10px; border-radius: 50%; }
+.t-red { background: #ff5f57; }
+.t-yellow { background: #febc2e; }
+.t-green { background: #28c840; }
+
+.terminal-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  margin-left: auto;
+  letter-spacing: 0.03em;
+}
+
+.terminal-body {
+  padding: 20px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  line-height: 1.9;
+  color: var(--text2);
+}
+
+.t-prompt { color: var(--accent); }
+.t-cmd { color: var(--text); }
+.t-ok { color: var(--green); }
+.t-warn { color: var(--amber); }
+.t-dim { color: var(--text3); }
+.t-hi { color: var(--accent); }
+.t-cursor {
+  display: inline-block;
+  width: 8px;
+  height: 13px;
+  background: var(--accent);
+  vertical-align: middle;
+  animation: blink 1.1s step-end infinite;
+}
+
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* ── STATS STRIP ── */
+.stats-strip {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.stat-item {
+  padding: 32px 48px;
+  border-right: 1px solid var(--border);
+}
+
+.stat-item:last-child { border-right: none; }
+
+.stat-num {
+  font-family: var(--serif);
+  font-size: 44px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.stat-lbl {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  text-transform: uppercase;
+}
+
+/* ── SECTION HEADERS ── */
+.section {
+  position: relative;
+  z-index: 1;
+  padding: 100px 48px;
+}
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 56px;
+  gap: 32px;
+}
+
+.section-left { flex: 1; }
+
+.section-tag {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.section-title em { font-style: italic; color: var(--text2); }
+
+.section-desc {
+  font-size: 15px;
+  color: var(--text2);
+  line-height: 1.8;
+  max-width: 340px;
+  margin-top: 12px;
+}
+
+/* ── FILTER TABS ── */
+.filter-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+
+.ftab {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  padding: 7px 16px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--text3);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ftab:hover { color: var(--text2); border-color: var(--border2); }
+.ftab.active { background: var(--accent-dim); border-color: rgba(91,123,255,0.4); color: var(--accent); }
+
+/* ── PROJECT CARDS ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.pcard {
+  background: var(--bg);
+  padding: 32px;
+  cursor: pointer;
+  transition: background 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.pcard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent), rgba(91,123,255,0));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.pcard:hover::before { transform: scaleX(1); }
+.pcard:hover { background: var(--bg2); }
+
+.pcard-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.pcard-num {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+}
+
+.diff-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  padding: 3px 9px;
+  border-radius: 2px;
+}
+
+.diff-easy { background: var(--green-dim); color: var(--green); border: 1px solid rgba(62,207,142,0.2); }
+.diff-medium { background: var(--amber-dim); color: var(--amber); border: 1px solid rgba(245,166,35,0.2); }
+.diff-hard { background: var(--rose-dim); color: var(--rose); border: 1px solid rgba(255,107,138,0.2); }
+
+.pcard-title {
+  font-family: var(--serif);
+  font-size: 21px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+
+.pcard-desc {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.pcard-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ptag {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 3px 8px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text3);
+  letter-spacing: 0.04em;
+}
+
+.pcard-arrow {
+  position: absolute;
+  bottom: 28px;
+  right: 28px;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text3);
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.pcard:hover .pcard-arrow {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+/* ── DETAIL PANEL ── */
+.detail-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(12,13,15,0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: fadein 0.2s ease;
+}
+
+.detail-overlay.open { display: flex; align-items: stretch; justify-content: flex-end; }
+
+.detail-panel {
+  width: min(680px, 100%);
+  height: 100%;
+  background: var(--bg2);
+  border-left: 1px solid var(--border2);
+  overflow-y: auto;
+  animation: slidein 0.3s cubic-bezier(0.16,1,0.3,1) both;
+}
+
+@keyframes slidein {
+  from { transform: translateX(60px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.dp-header {
+  position: sticky;
+  top: 0;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.dp-close {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dp-close:hover { color: var(--text); border-color: var(--border2); }
+
+.dp-body { padding: 40px 32px; }
+
+.dp-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.dp-title {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 24px;
+  line-height: 1.15;
+}
+
+.dp-section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  margin-top: 36px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.dp-text {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+
+.dp-terminal {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 16px 0;
+}
+
+.dp-terminal-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+}
+
+.dp-terminal-body {
+  padding: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 2;
+  color: var(--text2);
+  white-space: pre-wrap;
+}
+
+.dp-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.dp-tech {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 5px 12px;
+  border: 1px solid var(--border2);
+  border-radius: 2px;
+  color: var(--text2);
+  letter-spacing: 0.03em;
+}
+
+.dp-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  padding: 10px 20px;
+  border: 1px solid rgba(91,123,255,0.4);
+  border-radius: 4px;
+  color: var(--accent);
+  text-decoration: none;
+  background: var(--accent-dim2);
+  transition: all 0.2s;
+  margin-top: 12px;
+}
+
+.dp-github:hover { background: var(--accent-dim); }
+
+/* ── ABOUT ── */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.about-left {}
+
+.about-right {}
+
+.about-text {
+  font-size: 15px;
+  color: var(--text2);
+  line-height: 1.9;
+  margin-bottom: 16px;
+}
+
+.cert-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.cert-item {
+  font-family: var(--mono);
+  font-size: 11px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text2);
+  letter-spacing: 0.02em;
+  background: var(--bg2);
+}
+
+.cert-item strong {
+  display: block;
+  color: var(--text);
+  margin-bottom: 2px;
+  font-weight: 500;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tl-item {
+  display: flex;
+  gap: 20px;
+  padding-bottom: 28px;
+  position: relative;
+}
+
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 24px;
+  bottom: 0;
+  width: 1px;
+  background: var(--border);
+}
+
+.tl-item:last-child::before { display: none; }
+
+.tl-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  background: var(--bg);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.tl-content {}
+
+.tl-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+
+.tl-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.tl-sub {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+/* ── BLOG TEASER ── */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.blog-card {
+  background: var(--bg);
+  padding: 28px;
+  text-decoration: none;
+  transition: background 0.2s;
+  display: block;
+}
+
+.blog-card:hover { background: var(--bg2); }
+
+.blog-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+.blog-title {
+  font-family: var(--serif);
+  font-size: 19px;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 10px;
+}
+
+.blog-excerpt {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+}
+
+.blog-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  margin-top: 16px;
+  letter-spacing: 0.04em;
+}
+
+/* ── CONTACT ── */
+.contact-wrap {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 64px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 100%, rgba(91,123,255,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.contact-title {
+  font-family: var(--serif);
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.1;
+}
+
+.contact-sub {
+  font-size: 15px;
+  color: var(--text2);
+  margin-bottom: 40px;
+  max-width: 440px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.contact-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ── FOOTER ── */
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 32px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-left {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text3);
+  letter-spacing: 0.04em;
+}
+
+.footer-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.footer-links a {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text3);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--text); }
+
+/* ── VIDEO DEMO ── */
+.dp-video-wrap {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  margin: 16px 0;
+}
+
+.dp-video-wrap iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+
+.dp-video-ph {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.dp-video-ph-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text3);
+}
+
+hr.sec-div {
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadein {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px) {
+  nav { padding: 18px 24px; }
+  .hero { padding: 100px 24px 60px; }
+  .stats-strip { grid-template-columns: repeat(2,1fr); }
+  .section { padding: 64px 24px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .contact-wrap { padding: 40px 24px; }
+  footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+  .nav-links { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-logo-dot"></span>
+    grcengineer.io
+  </a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="https://github.com/roman-grc" target="_blank" class="nav-cta">GitHub ↗</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="text-align:center;align-items:center;">
+  <div class="hero-inner" style="display:flex;flex-direction:column;align-items:center;">
+    <h1 style="text-align:center;">Governance, Risk,<br>and Compliance,<br><em>engineered.</em></h1>
+    <p class="hero-sub">// autonomous governance at machine speed</p>
+    <p class="hero-desc" style="text-align:center;margin-left:auto;margin-right:auto;">Building intelligent compliance infrastructure that replaces manual, error-prone workflows with autonomous, policy-as-code systems. OSCAL, OPA, and AI — wired together.</p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="#projects" class="btn-primary">View projects →</a>
+      <a href="https://medium.com" target="_blank" class="btn-ghost">Read the blog</a>
+      <a href="mailto:contact@grcengineer.io" class="btn-ghost">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <div class="stat-num">10</div>
+    <div class="stat-lbl">Portfolio Projects</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">6+</div>
+    <div class="stat-lbl">Frameworks Covered</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">3yr</div>
+    <div class="stat-lbl">Cybersecurity Experience</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">10</div>
+    <div class="stat-lbl">Certifications</div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-header fade-in">
+    <div class="section-left">
+      <div class="section-tag">// 01 — Portfolio</div>
+      <h2 class="section-title">Featured<br><em>projects</em></h2>
+    </div>
+    <p class="section-desc">From foundational OSCAL tooling to AI-powered remediation. Enterprise-grade systems across the full complexity spectrum.</p>
+  </div>
+
+  <div class="filter-row">
+    <button class="ftab active" data-f="all">All</button>
+    <button class="ftab" data-f="easy">Beginner</button>
+    <button class="ftab" data-f="medium">Intermediate</button>
+    <button class="ftab" data-f="hard">Advanced</button>
+  </div>
+
+  <div class="projects-grid" id="projectsGrid"></div>
+</section>
+
+<hr class="sec-div">
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-header fade-in">
+    <div class="section-left">
+      <div class="section-tag">// 02 — About</div>
+      <h2 class="section-title">Who<br><em>I am</em></h2>
+    </div>
+    <p class="section-desc">A cybersecurity professional with three years across security engineering, cloud security, operations, and GRC.</p>
+  </div>
+
+  <div class="about-grid fade-in">
+    <div class="about-left">
+      <p class="about-text">I'm Roman — a cybersecurity professional with three years of experience spanning security engineering, cloud security, security operations, and governance, risk, and compliance. I've worked across internships at Fortune 500 companies, state government, and financial services — each building a different dimension of the security picture.</p>
+      <p class="about-text">My focus now is GRC-as-Code: treating compliance as a software engineering problem. That means Python automation, infrastructure-as-code, OSCAL data models, and AI-assisted remediation — not spreadsheets and manual checklists.</p>
+      <p class="about-text">Currently completing a BS in Cybersecurity and Information Assurance at WGU. I write about compliance engineering on Medium and share tooling on GitHub.</p>
+
+      <div class="section-tag" style="margin-top:40px;margin-bottom:16px">Certifications</div>
+      <div class="cert-grid">
+        <div class="cert-item"><strong>CySA+</strong>CompTIA</div>
+        <div class="cert-item"><strong>SSCP</strong>(ISC)²</div>
+        <div class="cert-item"><strong>CC</strong>(ISC)²</div>
+        <div class="cert-item"><strong>Security+</strong>CompTIA</div>
+        <div class="cert-item"><strong>Network+</strong>CompTIA</div>
+        <div class="cert-item"><strong>A+</strong>CompTIA</div>
+        <div class="cert-item"><strong>Linux Essentials</strong>LPI</div>
+        <div class="cert-item"><strong>AWS CCP</strong>Amazon</div>
+        <div class="cert-item"><strong>CCSP</strong>In progress</div>
+        <div class="cert-item"><strong>Pentest+</strong>In progress</div>
+      </div>
+
+      <div class="section-tag" style="margin-top:32px;margin-bottom:12px">Education</div>
+      <div class="cert-grid">
+        <div class="cert-item" style="grid-column:1/-1"><strong>BS Cybersecurity &amp; Information Assurance</strong>Western Governors University · In progress</div>
+        <div class="cert-item" style="grid-column:1/-1"><strong>AAS IT – Cybersecurity</strong>Completed</div>
+      </div>
+    </div>
+
+    <div class="about-right">
+      <div class="section-tag" style="margin-bottom:24px">Experience</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-date">FEB 2026 — PRESENT · REMOTE</div>
+            <div class="tl-title">Security Analyst Intern</div>
+            <div class="tl-sub">Mutual of Omaha · Governance, Risk, and Compliance Team. Applying GRC-as-Code principles in an enterprise financial services environment.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-date">SEP 2025 — JAN 2026 · LINCOLN, NE</div>
+            <div class="tl-title">Security Engineer I</div>
+            <div class="tl-sub">State of Nebraska · Contract · Security Operations Team. On-site security engineering for state government infrastructure.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-date">JUN 2025 — AUG 2025 · DALLAS, TX</div>
+            <div class="tl-title">Cybersecurity Intern</div>
+            <div class="tl-sub">Hilton · Cloud Security Engineering Team. Hybrid role focused on cloud security posture across a global hospitality enterprise.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-date">SEP 2023 — APR 2025 · LINCOLN, NE</div>
+            <div class="tl-title">Information Security Intern</div>
+            <div class="tl-sub">Ameritas · Security Engineering Team. 1 year 8 months across security engineering in a financial services environment. Foundation for the GRC and automation focus that followed.</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-date">MAY 2023 — JUL 2023 · LINCOLN, NE</div>
+            <div class="tl-title">Technology Intern</div>
+            <div class="tl-sub">Nebraska Department of Transportation · Unified Communications Technology Team. On-site technology infrastructure role. Entry point into professional IT and cybersecurity.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="sec-div">
+
+<!-- WRITING -->
+<section class="section" id="writing">
+  <div class="section-header fade-in">
+    <div class="section-left">
+      <div class="section-tag">// 03 — Writing</div>
+      <h2 class="section-title">From the<br><em>blog</em></h2>
+    </div>
+    <p class="section-desc">Technical writing on GRC engineering, automation, and building compliant cloud infrastructure.</p>
+  </div>
+
+  <div class="blog-grid fade-in">
+    <a href="https://medium.com" target="_blank" class="blog-card">
+      <div class="blog-meta">MAY 2025 · 8 MIN READ</div>
+      <div class="blog-title">OSCAL is not optional: why GRC teams need to treat compliance as code</div>
+      <div class="blog-excerpt">The NIST OSCAL standard is maturing fast. Here's why forward-looking GRC teams should be building tooling around it now, not waiting for vendors to do it for them.</div>
+      <span class="blog-link">Read on Medium ↗</span>
+    </a>
+    <a href="https://medium.com" target="_blank" class="blog-card">
+      <div class="blog-meta">APR 2025 · 6 MIN READ</div>
+      <div class="blog-title">Open Policy Agent for compliance engineers: a practical primer</div>
+      <div class="blog-excerpt">OPA and Rego are powerful tools for policy enforcement — but most tutorials assume a developer audience. This one doesn't.</div>
+      <span class="blog-link">Read on Medium ↗</span>
+    </a>
+    <a href="https://medium.com" target="_blank" class="blog-card">
+      <div class="blog-meta">MAR 2025 · 10 MIN READ</div>
+      <div class="blog-title">Wiring Claude into your AWS Config pipeline for autonomous remediation</div>
+      <div class="blog-excerpt">A walkthrough of the architecture behind Project 7: using the Anthropic API to generate and apply context-aware fixes to Config violations at scale.</div>
+      <span class="blog-link">Read on Medium ↗</span>
+    </a>
+  </div>
+</section>
+
+<hr class="sec-div">
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="contact-wrap fade-in">
+    <h2 class="contact-title">Let's build something<br><em>autonomous.</em></h2>
+    <p class="contact-sub">Open to full-time GRC engineering roles, freelance compliance automation projects, and conversations about the future of governance infrastructure.</p>
+    <div class="contact-actions">
+      <a href="mailto:contact@grcengineer.io" class="btn-primary">contact@grcengineer.io</a>
+      <a href="https://linkedin.com/in/roman" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+      <a href="https://medium.com" target="_blank" class="btn-ghost">Medium ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-left">© 2025 grcengineer.io — Roman</span>
+  <ul class="footer-links">
+    <li><a href="https://github.com/roman-grc" target="_blank">GitHub</a></li>
+    <li><a href="https://linkedin.com" target="_blank">LinkedIn</a></li>
+    <li><a href="https://medium.com" target="_blank">Medium</a></li>
+    <li><a href="mailto:contact@grcengineer.io">Email</a></li>
+  </ul>
+</footer>
+
+<!-- DETAIL PANEL OVERLAY -->
+<div class="detail-overlay" id="detailOverlay">
+  <div class="detail-panel" id="detailPanel">
+    <div class="dp-header">
+      <span style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:0.06em">PROJECT DETAIL</span>
+      <button class="dp-close" onclick="closeDetail()">✕ Close</button>
+    </div>
+    <div class="dp-body" id="dpBody"></div>
+  </div>
+</div>
+
+<script>
+const projects = [
+  {
+    id:'01', title:'OSCAL profile validator', diff:'easy',
+    desc:'CLI tool validating NIST OSCAL profiles with real-time error detection and multi-format conversion.',
+    tech:['OSCAL','Python','JSON Schema','Click'],
+    overview:'Python-based CLI tool that validates OSCAL profiles against official NIST JSON Schema definitions, then converts between XML, JSON, and YAML formats. Demonstrates deep control framework literacy at the data layer — the foundation for every downstream compliance automation.',
+    details:'Ships with automatic format detection, detailed schema error reporting with line/column context, batch directory validation, multi-format export, and control catalog keyword searching. Designed to slot into any CI pipeline as a pre-commit or pre-deploy check.',
+    demo:`$ python validate.py ssp.json --format json --verbose\n\n  Detected: OSCAL System Security Plan v1.1.2\n  Schema:   NIST OSCAL JSON Schema (rev5)\n\n  ✓ Structure valid\n  ✓ 47 implemented controls\n  ✓ 0 schema errors\n  ✓ 3 resolved control references\n\n  Converting → ssp.yaml  [done]\n  Report    → report.html [done]`,
+    github:'https://github.com'
+  },
+  {
+    id:'02', title:'Compliance evidence crawler', diff:'easy',
+    desc:'AWS Lambda collecting compliance evidence from CloudTrail, Config, and Security Hub on a schedule.',
+    tech:['AWS Lambda','Python','CloudWatch Events','S3'],
+    overview:'Serverless function that queries AWS services for compliance evidence on a configurable schedule. Event-driven and cost-effective — runs only when needed and outputs structured evidence packages formatted for auditor consumption.',
+    details:'Extracts CloudTrail logs filtered by compliance-relevant API calls, Config rule evaluation history, and Security Hub findings. Bundles everything into timestamped, resource-tagged JSON packages and uploads to an S3 audit bucket. Supports multi-account via assumed roles.',
+    demo:`[Lambda] ccm-evidence-crawler triggered\n[time]  2025-04-16T09:00:00Z\n\n  → Querying CloudTrail...\n    1,204 events collected\n\n  → Querying AWS Config...\n    48 rules evaluated\n    3 NON_COMPLIANT resources\n\n  → Querying Security Hub...\n    12 FAILED findings\n\n  → Packaging evidence bundle...\n  ✓ s3://audit-bucket/2025-04-16/evidence.zip`,
+    github:'https://github.com'
+  },
+  {
+    id:'03', title:'Risk register automation', diff:'easy',
+    desc:'Terraform + Lambda auto-generating risk registers from IaC with NIST 800-53 control mapping.',
+    tech:['Terraform','Python','DynamoDB','NIST 800-53'],
+    overview:'Infrastructure-as-Code approach to risk management. Parses Terraform plan output to identify security gaps, scores them by impact and likelihood, maps findings to NIST 800-53 controls, and persists a structured risk register to DynamoDB.',
+    details:'The Lambda triggers on terraform plan JSON uploads to S3, extracts resource configurations, runs a rules engine to identify risk patterns, maps each finding to one or more NIST controls (including baselines), stores records in DynamoDB, and generates formatted weekly risk reports.',
+    demo:`Parsing terraform.plan.json\n  Resources: 142 total\n  Analyzed:  142\n\n  Risks identified: 8\n  ├─ CRITICAL  1  (SC-28: EBS unencrypted)\n  ├─ HIGH      3  (AC-3, AU-12, IA-5)\n  └─ MEDIUM    4  (various)\n\n  → DynamoDB updated: 8 records\n  → Weekly report queued\n  ✓ Register current as of 2025-04-16`,
+    github:'https://github.com'
+  },
+  {
+    id:'04', title:'Policy-as-Code engine (OPA)', diff:'medium',
+    desc:'Open Policy Agent ruleset enforcing AWS security compliance via custom Rego policies mapped to NIST controls.',
+    tech:['OPA/Rego','AWS API','NIST 800-53','Python'],
+    overview:'Custom OPA policy bundle enforcing compliance across AWS infrastructure at plan time and runtime. Every Rego rule traces directly to one or more NIST 800-53 controls, creating an auditable, version-controlled policy layer.',
+    details:'Coverage includes encryption enforcement (SC-28), least-privilege access controls (AC-6), mandatory resource tagging (CM-8), network segmentation (SC-7), and MFA enforcement (IA-5). Each violation outputs a structured finding with control ID, resource ARN, severity, and remediation guidance.',
+    demo:`$ opa eval -d policies/ -i aws_state.json "data.compliance"\n\nDENY  s3-prod-data\n  control:     SC-28\n  reason:      Server-side encryption not enabled\n  resource:    arn:aws:s3:::prod-data\n  remediation: Enable AES-256 or aws:kms encryption\n\nPASS  iam-readonly-policy    [AC-6]\nPASS  vpc-flow-logs-enabled  [SC-7]\nPASS  mfa-enforced           [IA-5]\n\nResult: 1 DENY, 3 PASS`,
+    github:'https://github.com'
+  },
+  {
+    id:'05', title:'Control assessment dashboard', diff:'medium',
+    desc:'React dashboard with real-time control status, evidence tracking, and audit readiness scoring.',
+    tech:['React','AWS API Gateway','DynamoDB','Lambda'],
+    overview:'Interactive dashboard giving GRC teams a live view of control implementation status, evidence completeness, and overall audit readiness — without opening a spreadsheet. Replaces the quarterly point-in-time snapshot with a continuously updated view.',
+    details:'Displays per-control status (PASS/FAIL/N-A/IN-PROGRESS), evidence completeness percentage per control family, an overall audit readiness score with week-over-week trend, overdue evidence items, and a remediation task tracker with owner assignment and due dates.',
+    demo:`Audit readiness:  84%  ↑ 3% this week\n\nControl families:\n  Access Control (AC)      92% ████████░░\n  Audit & Acct (AU)        78% ███████░░░\n  Config Mgmt (CM)         88% ████████░░\n  Incident Resp (IR)       71% ███████░░░\n  Risk Assessment (RA)     95% █████████░\n\nEvidence gaps: 9 items\n  3 OVERDUE  ·  4 due this week  ·  2 upcoming`,
+    github:'https://github.com'
+  },
+  {
+    id:'06', title:'Compliance-to-policy pipeline', diff:'medium',
+    desc:'CI/CD pipeline converting OSCAL profiles into executable OPA/Rego policies via GitHub Actions.',
+    tech:['GitHub Actions','OSCAL','OPA/Rego','Python'],
+    overview:'Full GitOps compliance-as-code workflow: commit an OSCAL profile, get executable enforcement policy. The pipeline parses control selections from OSCAL, generates Rego rules per control, runs tests, and deploys to the OPA enforcement tier — entirely automated.',
+    details:'Triggered on OSCAL file changes in the repo. Parses control baselines, generates one Rego rule per control with correct metadata, runs policy unit tests (one per rule), produces a coverage report, deploys to OPA, and posts a pass/fail summary as a GitHub PR check.',
+    demo:`[PR #44] Add FedRAMP Moderate profile\n\n  Parsing: oscal-fedramp-moderate.xml\n  Controls selected: 325\n\n  Generating Rego rules...\n  ✓ 325 / 325 rules generated\n\n  Running policy tests...\n  ✓ 325 / 325 tests passed\n\n  Deploying to OPA...\n  ✓ Bundle pushed: compliance-v2.4.1\n\n  PR check: PASSED ✓`,
+    github:'https://github.com'
+  },
+  {
+    id:'07', title:'AWS Config + AI remediator', diff:'hard',
+    desc:'Config detects violations, Claude API generates intelligent fixes, Lambda executes them autonomously.',
+    tech:['AWS Config','Claude API','Lambda','Python','SNS'],
+    overview:'Intelligent autonomous remediation. AWS Config violations trigger a Lambda that calls the Claude API with full resource context, receives a generated remediation action, applies it via the AWS SDK, and re-evaluates the rule — closing the loop without human intervention.',
+    details:'Example: non-encrypted S3 bucket → Config FAIL → Lambda invoked with resource ARN and violation context → Claude generates least-privilege encryption policy JSON → Lambda applies BucketEncryption → Config re-evaluates → finding closed. Full audit trail in DynamoDB. Human-in-the-loop mode available for critical resources.',
+    demo:`[Config] NON_COMPLIANT: s3-prod-data\n  Rule:    s3-bucket-server-side-encryption\n  Control: SC-28\n\n[Lambda] Invoking Claude API...\n  Context: S3 bucket, SSE missing, prod env\n  Generating remediation action...\n\n[Claude] → Apply SSE with aws:kms (KMS CMK)\n         → Key: arn:aws:kms:us-east-1:...\n         → Estimated impact: none\n\n[Lambda] Applying patch...\n✓ BucketEncryption set\n[Config] Re-evaluating... COMPLIANT\n✓ Finding closed  ·  elapsed: 4.2s`,
+    github:'https://github.com'
+  },
+  {
+    id:'08', title:'Continuous controls monitoring', diff:'hard',
+    desc:'Production system polling 52 controls hourly, scoring health, tracking drift, auto-generating evidence.',
+    tech:['Python','EC2','DynamoDB','SNS','CloudWatch'],
+    overview:'Replaces annual point-in-time audits with real-time continuous monitoring. Distributed agent architecture: agents evaluate controls against current infrastructure state hourly, score implementation strength, track drift over time, and alert on regressions.',
+    details:'Each control maps to one or more evaluator functions. Agents run on EC2, poll control state, persist results to DynamoDB with timestamps, maintain a 90-day trend history, send SNS alerts on any PASS→FAIL transition, and automatically generate evidence bundles on schedule.',
+    demo:`[CCM] Hourly sweep started · 09:00Z\n  Controls in scope: 52\n\n  [AC-2]  Account Mgmt     PASS  ✓\n  [AU-9]  Audit Protection FAIL  ✗  ← degraded\n  [SC-28] Encryption       PASS  ✓\n  [IA-5]  Auth Mgmt        PASS  ✓\n  ... (48 more)\n\n  Result: 49 PASS · 3 FAIL\n\n  ALERT → SNS: AU-9 drift detected\n  Evidence → s3://audit/2025-04-16/bundle.zip`,
+    github:'https://github.com'
+  },
+  {
+    id:'09', title:'FedRAMP automation (OSCAL)', diff:'hard',
+    desc:'End-to-end FedRAMP pipeline: SSP generation, automated assessment, POA&M tracking — all OSCAL.',
+    tech:['OSCAL','Python','Terraform','GitHub Actions'],
+    overview:'Complete FedRAMP documentation lifecycle as code. Starting from infrastructure state and control implementation data, the pipeline generates a compliant OSCAL System Security Plan, runs an automated assessment, produces an Assessment Report, and creates and tracks a POA&M.',
+    details:'Infrastructure inventory → OSCAL SSP with all 325 Moderate controls documented → automated assessment runners evaluate each control → OSCAL SAR generated with findings → POA&M items created for failures with target dates → continuous ATO workflow with monthly re-assessment on schedule.',
+    demo:`[Pipeline] FedRAMP Moderate · rev5\n\n  Stage 1: Generate SSP\n  ✓ 325 controls documented\n  ✓ OSCAL SSP v1.1.2 generated\n\n  Stage 2: Automated assessment\n  ✓ 301 controls  SATISFIED\n  ✗  24 controls  NOT SATISFIED\n\n  Stage 3: Generate artifacts\n  ✓ OSCAL SAR generated\n  ✓ POA&M: 24 items created\n\n  Artifacts → s3://fedramp-artifacts/`,
+    github:'https://github.com'
+  },
+  {
+    id:'10', title:'AI-powered control gap analyzer', diff:'hard',
+    desc:'Claude API analyzes live AWS infrastructure, identifies NIST gaps, and generates Terraform remediation.',
+    tech:['Claude API','Python','AWS SDK','Terraform','NIST 800-53'],
+    overview:'Advanced AI system that crawls a live AWS environment, maps every resource configuration to the NIST 800-53 control catalog, sends findings to Claude for deep gap analysis, and produces a prioritized report with generated, ready-to-apply Terraform remediation code.',
+    details:'Crawls 18+ AWS services via boto3, maps resource configs to applicable NIST controls, identifies gaps between current state and baseline requirements, sends context-rich prompts to Claude API for analysis and fix generation, and outputs a ranked gap report with Terraform HCL files per finding.',
+    demo:`Scanning AWS environment...\n  Services: 18  ·  Resources: 847\n\n  Mapping to NIST 800-53 Moderate...\n  ✓ 847 resources mapped\n\n  Invoking Claude gap analysis...\n  ────────────────────────────────\n  Gaps identified: 23\n  ├─ CRITICAL   7  (immediate risk)\n  ├─ HIGH       9\n  └─ MEDIUM     7\n\n  Generating Terraform fixes...\n  ✓ 23 .tf files written\n  ✓ Gap report → gap-report.html`,
+    github:'https://github.com'
+  }
+];
+
+const diffLabel = { easy: 'Beginner', medium: 'Intermediate', hard: 'Advanced' };
+
+function renderProjects(filter) {
+  const grid = document.getElementById('projectsGrid');
+  grid.innerHTML = '';
+  const list = filter === 'all' ? projects : projects.filter(p => p.diff === filter);
+  list.forEach((p, i) => {
+    const el = document.createElement('div');
+    el.className = 'pcard fade-in';
+    el.style.transitionDelay = (i * 0.04) + 's';
+    el.innerHTML = `
+      <div class="pcard-top">
+        <span class="pcard-num">${p.id}</span>
+        <span class="diff-badge diff-${p.diff}">${diffLabel[p.diff].toUpperCase()}</span>
+      </div>
+      <div class="pcard-title">${p.title}</div>
+      <div class="pcard-desc">${p.desc}</div>
+      <div class="pcard-tags">${p.tech.map(t => `<span class="ptag">${t}</span>`).join('')}</div>
+      <div class="pcard-arrow">→</div>
+    `;
+    el.addEventListener('click', () => openDetail(p));
+    grid.appendChild(el);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => el.classList.add('visible'));
+    });
+  });
+}
+
+function openDetail(p) {
+  document.getElementById('dpBody').innerHTML = `
+    <div class="dp-eyebrow">
+      <span class="pcard-num" style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:0.06em">${p.id}</span>
+      <span class="diff-badge diff-${p.diff}">${diffLabel[p.diff].toUpperCase()}</span>
+    </div>
+    <div class="dp-title">${p.title}</div>
+
+    <div class="dp-section-label" style="margin-top:0">Video demo</div>
+    ${p.video ? `
+    <div class="dp-video-wrap">
+      <iframe src="https://www.youtube.com/embed/${p.video}" title="Demo: ${p.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>` : `
+    <div class="dp-video-ph">
+      <div class="dp-video-ph-inner">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:10px;opacity:0.4"><circle cx="16" cy="16" r="15" stroke="currentColor" stroke-width="1.5"/><polygon points="13,10 24,16 13,22" fill="currentColor"/></svg>
+        <span style="font-family:var(--mono);font-size:11px;color:var(--text3);letter-spacing:0.06em">Demo coming soon</span>
+        <span style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:4px;opacity:0.6">Add a YouTube video ID to projects data</span>
+      </div>
+    </div>`}
+
+    <div class="dp-section-label">Overview</div>
+    <p class="dp-text">${p.overview}</p>
+
+    <div class="dp-section-label">Implementation</div>
+    <p class="dp-text">${p.details}</p>
+
+    <div class="dp-section-label">Terminal output</div>
+    <div class="dp-terminal">
+      <div class="dp-terminal-bar">
+        <span class="t-dot t-red"></span>
+        <span class="t-dot t-yellow"></span>
+        <span class="t-dot t-green"></span>
+        <span class="terminal-title" style="font-family:var(--mono);font-size:11px;color:var(--text3);margin-left:auto">${p.title.toLowerCase().replace(/ /g,'-')}.py</span>
+      </div>
+      <div class="dp-terminal-body">${p.demo}</div>
+    </div>
+
+    <div class="dp-section-label">Stack</div>
+    <div class="dp-stack">${p.tech.map(t => `<span class="dp-tech">${t}</span>`).join('')}</div>
+
+    <div class="dp-section-label">Source code</div>
+    <p class="dp-text">Full implementation, tests, and documentation available on GitHub.</p>
+    <a href="${p.github}" target="_blank" class="dp-github">View on GitHub ↗</a>
+  `;
+  document.getElementById('detailOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDetail() {
+  document.getElementById('detailOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('detailOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeDetail();
+});
+
+document.querySelectorAll('.ftab').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.ftab').forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    renderProjects(this.dataset.f);
+  });
+});
+
+// scroll animations
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+renderProjects('all');
+
+// observe newly created cards
+const gridObs = new MutationObserver(() => {
+  document.querySelectorAll('.fade-in:not(.visible)').forEach(el => observer.observe(el));
+});
+gridObs.observe(document.getElementById('projectsGrid'), { childList: true });
+</script>
+</body>
+</html>
