@@ -1,0 +1,13 @@
+{% set diffLabel = { easy: "Beginner", medium: "Intermediate", hard: "Advanced" } %}
+<a href="/projects/{{ p.slug }}/" class="pcard fade-in" data-difficulty="{{ p.difficulty }}">
+  <div class="pcard-top">
+    <span class="pcard-num">{{ p.id }}</span>
+    <span class="diff-badge diff-{{ p.difficulty }}">{{ diffLabel[p.difficulty] | upper }}</span>
+  </div>
+  <div class="pcard-title">{{ p.title }}</div>
+  <div class="pcard-desc">{{ p.description }}</div>
+  <div class="pcard-tags">
+    {% for t in p.tech %}<span class="ptag">{{ t }}</span>{% endfor %}
+  </div>
+  <div class="pcard-arrow">→</div>
+</a>

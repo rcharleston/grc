@@ -1,0 +1,12 @@
+[
+  { "name": "CySA+", "issuer": "CompTIA" },
+  { "name": "SSCP", "issuer": "(ISC)²" },
+  { "name": "CC", "issuer": "(ISC)²" },
+  { "name": "Security+", "issuer": "CompTIA" },
+  { "name": "Network+", "issuer": "CompTIA" },
+  { "name": "A+", "issuer": "CompTIA" },
+  { "name": "Linux Essentials", "issuer": "LPI" },
+  { "name": "AWS CCP", "issuer": "Amazon" },
+  { "name": "CCSP", "issuer": "In progress" },
+  { "name": "Pentest+", "issuer": "In progress" }
+]

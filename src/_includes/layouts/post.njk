@@ -1,0 +1,15 @@
+---
+layout: layouts/base.njk
+---
+<section class="section" style="padding-top:140px;">
+  <article class="post-article fade-in">
+    <a href="/blog/" class="post-back">← All writing</a>
+    <div class="post-meta">{{ page.date | dateReadable | upper }}{% if readTime %} · {{ readTime }}{% endif %}</div>
+    <h1>{{ title }}</h1>
+    {% if description %}<p class="hero-desc" style="margin-bottom:32px;">{{ description }}</p>{% endif %}
+    {{ content | safe }}
+    {% if externalUrl %}
+    <p style="margin-top:40px;"><a href="{{ externalUrl }}" target="_blank" rel="noopener" class="dp-github">Read the full version ↗</a></p>
+    {% endif %}
+  </article>
+</section>

@@ -1,0 +1,48 @@
+---
+pagination:
+  data: projects
+  size: 1
+  alias: p
+permalink: "/projects/{{ p.slug }}/"
+layout: layouts/base.njk
+eleventyComputed:
+  title: "{{ p.title }}"
+  description: "{{ p.description }}"
+---
+{% set diffLabel = { easy: "Beginner", medium: "Intermediate", hard: "Advanced" } %}
+<section class="section" style="padding-top:140px;max-width:880px;margin:0 auto;">
+  <a href="/projects/" class="post-back">← All projects</a>
+
+  <div class="dp-eyebrow">
+    <span class="pcard-num">{{ p.id }}</span>
+    <span class="diff-badge diff-{{ p.difficulty }}">{{ diffLabel[p.difficulty] | upper }}</span>
+  </div>
+  <h1 class="dp-title">{{ p.title }}</h1>
+  <p class="hero-desc" style="margin-bottom:24px;">{{ p.description }}</p>
+
+  <div class="dp-section-label" style="margin-top:0">Overview</div>
+  <p class="dp-text">{{ p.overview }}</p>
+
+  <div class="dp-section-label">Implementation</div>
+  <p class="dp-text">{{ p.details }}</p>
+
+  <div class="dp-section-label">Terminal output</div>
+  <div class="dp-terminal">
+    <div class="dp-terminal-bar">
+      <span class="t-dot t-red"></span>
+      <span class="t-dot t-yellow"></span>
+      <span class="t-dot t-green"></span>
+      <span class="terminal-title" style="margin-left:auto">{{ p.slug }}.py</span>
+    </div>
+    <div class="dp-terminal-body">{{ p.demo }}</div>
+  </div>
+
+  <div class="dp-section-label">Stack</div>
+  <div class="dp-stack">
+    {% for t in p.tech %}<span class="dp-tech">{{ t }}</span>{% endfor %}
+  </div>
+
+  <div class="dp-section-label">Source code</div>
+  <p class="dp-text">Full implementation, tests, and documentation available on GitHub.</p>
+  <a href="{{ p.github }}" target="_blank" rel="noopener" class="dp-github">View on GitHub ↗</a>
+</section>

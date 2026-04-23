@@ -1,0 +1,14 @@
+{
+  "title": "grcengineer.io",
+  "tagline": "Governance, Risk, and Compliance, engineered.",
+  "description": "Roman builds intelligent compliance infrastructure — OSCAL tooling, OPA policies, and AI-assisted remediation. Portfolio, blog, and contact.",
+  "url": "https://grcengineer.io",
+  "author": "Roman",
+  "email": "contact@grcengineer.io",
+  "social": {
+    "github": "https://github.com/roman-grc",
+    "linkedin": "https://linkedin.com/in/roman",
+    "medium": "https://medium.com"
+  },
+  "ogImage": "/assets/og-default.png"
+}

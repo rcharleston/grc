@@ -1,0 +1,83 @@
+---
+layout: layouts/base.njk
+title: null
+description: Roman builds intelligent compliance infrastructure — OSCAL tooling, OPA policies, and AI-assisted remediation. Portfolio, blog, and contact.
+---
+<section class="hero" style="text-align:center;align-items:center;">
+  <div class="hero-inner" style="display:flex;flex-direction:column;align-items:center;">
+    <h1 style="text-align:center;">Governance, Risk,<br>and Compliance,<br><em>engineered.</em></h1>
+    <p class="hero-sub">// autonomous governance at machine speed</p>
+    <p class="hero-desc" style="text-align:center;margin-left:auto;margin-right:auto;">Building intelligent compliance infrastructure that replaces manual, error-prone workflows with autonomous, policy-as-code systems. OSCAL, OPA, and AI — wired together.</p>
+    <div class="hero-actions" style="justify-content:center;">
+      <a href="/projects/" class="btn-primary">View projects →</a>
+      <a href="/blog/" class="btn-ghost">Read the blog</a>
+      <a href="/contact/" class="btn-ghost">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<div class="stats-strip">
+  <div class="stat-item">
+    <div class="stat-num">{{ projects.length }}</div>
+    <div class="stat-lbl">Portfolio Projects</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">6+</div>
+    <div class="stat-lbl">Frameworks Covered</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">3yr</div>
+    <div class="stat-lbl">Cybersecurity Experience</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">{{ certifications.length }}</div>
+    <div class="stat-lbl">Certifications</div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="section-header fade-in">
+    <div class="section-left">
+      <div class="section-tag">// 01 — Portfolio</div>
+      <h2 class="section-title">Featured<br><em>projects</em></h2>
+    </div>
+    <p class="section-desc">From foundational OSCAL tooling to AI-powered remediation. Enterprise-grade systems across the full complexity spectrum.</p>
+  </div>
+
+  <div class="projects-grid">
+    {% for p in projects | limit(6) %}
+      {% include "partials/project-card.njk" %}
+    {% endfor %}
+  </div>
+
+  <div style="text-align:center;margin-top:40px;">
+    <a href="/projects/" class="btn-ghost">See all {{ projects.length }} projects →</a>
+  </div>
+</section>
+
+<hr class="sec-div">
+
+<section class="section">
+  <div class="section-header fade-in">
+    <div class="section-left">
+      <div class="section-tag">// 02 — Latest writing</div>
+      <h2 class="section-title">From the<br><em>blog</em></h2>
+    </div>
+    <p class="section-desc">Technical writing on GRC engineering, automation, and building compliant cloud infrastructure.</p>
+  </div>
+
+  {% if collections.posts.length %}
+  <div class="blog-grid fade-in">
+    {% for post in collections.posts | limit(3) %}
+    <a href="{{ post.url }}" class="blog-card">
+      <div class="blog-meta">{{ post.date | dateReadable | upper }}{% if post.data.readTime %} · {{ post.data.readTime }}{% endif %}</div>
+      <div class="blog-title">{{ post.data.title }}</div>
+      <div class="blog-excerpt">{{ post.data.description }}</div>
+      <span class="blog-link">Read post ↗</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="section-desc" style="max-width:none;">No posts yet — check back soon.</p>
+  {% endif %}
+</section>
