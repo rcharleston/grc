@@ -1,0 +1,122 @@
+[
+  {
+    "id": "01",
+    "slug": "oscal-profile-validator",
+    "title": "OSCAL profile validator",
+    "difficulty": "easy",
+    "description": "CLI tool validating NIST OSCAL profiles with real-time error detection and multi-format conversion.",
+    "tech": ["OSCAL", "Python", "JSON Schema", "Click"],
+    "overview": "Python-based CLI tool that validates OSCAL profiles against official NIST JSON Schema definitions, then converts between XML, JSON, and YAML formats. Demonstrates deep control framework literacy at the data layer — the foundation for every downstream compliance automation.",
+    "details": "Ships with automatic format detection, detailed schema error reporting with line/column context, batch directory validation, multi-format export, and control catalog keyword searching. Designed to slot into any CI pipeline as a pre-commit or pre-deploy check.",
+    "demo": "$ python validate.py ssp.json --format json --verbose\n\n  Detected: OSCAL System Security Plan v1.1.2\n  Schema:   NIST OSCAL JSON Schema (rev5)\n\n  ✓ Structure valid\n  ✓ 47 implemented controls\n  ✓ 0 schema errors\n  ✓ 3 resolved control references\n\n  Converting → ssp.yaml  [done]\n  Report    → report.html [done]",
+    "github": "https://github.com"
+  },
+  {
+    "id": "02",
+    "slug": "compliance-evidence-crawler",
+    "title": "Compliance evidence crawler",
+    "difficulty": "easy",
+    "description": "AWS Lambda collecting compliance evidence from CloudTrail, Config, and Security Hub on a schedule.",
+    "tech": ["AWS Lambda", "Python", "CloudWatch Events", "S3"],
+    "overview": "Serverless function that queries AWS services for compliance evidence on a configurable schedule. Event-driven and cost-effective — runs only when needed and outputs structured evidence packages formatted for auditor consumption.",
+    "details": "Extracts CloudTrail logs filtered by compliance-relevant API calls, Config rule evaluation history, and Security Hub findings. Bundles everything into timestamped, resource-tagged JSON packages and uploads to an S3 audit bucket. Supports multi-account via assumed roles.",
+    "demo": "[Lambda] ccm-evidence-crawler triggered\n[time]  2025-04-16T09:00:00Z\n\n  → Querying CloudTrail...\n    1,204 events collected\n\n  → Querying AWS Config...\n    48 rules evaluated\n    3 NON_COMPLIANT resources\n\n  → Querying Security Hub...\n    12 FAILED findings\n\n  → Packaging evidence bundle...\n  ✓ s3://audit-bucket/2025-04-16/evidence.zip",
+    "github": "https://github.com"
+  },
+  {
+    "id": "03",
+    "slug": "risk-register-automation",
+    "title": "Risk register automation",
+    "difficulty": "easy",
+    "description": "Terraform + Lambda auto-generating risk registers from IaC with NIST 800-53 control mapping.",
+    "tech": ["Terraform", "Python", "DynamoDB", "NIST 800-53"],
+    "overview": "Infrastructure-as-Code approach to risk management. Parses Terraform plan output to identify security gaps, scores them by impact and likelihood, maps findings to NIST 800-53 controls, and persists a structured risk register to DynamoDB.",
+    "details": "The Lambda triggers on terraform plan JSON uploads to S3, extracts resource configurations, runs a rules engine to identify risk patterns, maps each finding to one or more NIST controls (including baselines), stores records in DynamoDB, and generates formatted weekly risk reports.",
+    "demo": "Parsing terraform.plan.json\n  Resources: 142 total\n  Analyzed:  142\n\n  Risks identified: 8\n  ├─ CRITICAL  1  (SC-28: EBS unencrypted)\n  ├─ HIGH      3  (AC-3, AU-12, IA-5)\n  └─ MEDIUM    4  (various)\n\n  → DynamoDB updated: 8 records\n  → Weekly report queued\n  ✓ Register current as of 2025-04-16",
+    "github": "https://github.com"
+  },
+  {
+    "id": "04",
+    "slug": "policy-as-code-engine-opa",
+    "title": "Policy-as-Code engine (OPA)",
+    "difficulty": "medium",
+    "description": "Open Policy Agent ruleset enforcing AWS security compliance via custom Rego policies mapped to NIST controls.",
+    "tech": ["OPA/Rego", "AWS API", "NIST 800-53", "Python"],
+    "overview": "Custom OPA policy bundle enforcing compliance across AWS infrastructure at plan time and runtime. Every Rego rule traces directly to one or more NIST 800-53 controls, creating an auditable, version-controlled policy layer.",
+    "details": "Coverage includes encryption enforcement (SC-28), least-privilege access controls (AC-6), mandatory resource tagging (CM-8), network segmentation (SC-7), and MFA enforcement (IA-5). Each violation outputs a structured finding with control ID, resource ARN, severity, and remediation guidance.",
+    "demo": "$ opa eval -d policies/ -i aws_state.json \"data.compliance\"\n\nDENY  s3-prod-data\n  control:     SC-28\n  reason:      Server-side encryption not enabled\n  resource:    arn:aws:s3:::prod-data\n  remediation: Enable AES-256 or aws:kms encryption\n\nPASS  iam-readonly-policy    [AC-6]\nPASS  vpc-flow-logs-enabled  [SC-7]\nPASS  mfa-enforced           [IA-5]\n\nResult: 1 DENY, 3 PASS",
+    "github": "https://github.com"
+  },
+  {
+    "id": "05",
+    "slug": "control-assessment-dashboard",
+    "title": "Control assessment dashboard",
+    "difficulty": "medium",
+    "description": "React dashboard with real-time control status, evidence tracking, and audit readiness scoring.",
+    "tech": ["React", "AWS API Gateway", "DynamoDB", "Lambda"],
+    "overview": "Interactive dashboard giving GRC teams a live view of control implementation status, evidence completeness, and overall audit readiness — without opening a spreadsheet. Replaces the quarterly point-in-time snapshot with a continuously updated view.",
+    "details": "Displays per-control status (PASS/FAIL/N-A/IN-PROGRESS), evidence completeness percentage per control family, an overall audit readiness score with week-over-week trend, overdue evidence items, and a remediation task tracker with owner assignment and due dates.",
+    "demo": "Audit readiness:  84%  ↑ 3% this week\n\nControl families:\n  Access Control (AC)      92% ████████░░\n  Audit & Acct (AU)        78% ███████░░░\n  Config Mgmt (CM)         88% ████████░░\n  Incident Resp (IR)       71% ███████░░░\n  Risk Assessment (RA)     95% █████████░\n\nEvidence gaps: 9 items\n  3 OVERDUE  ·  4 due this week  ·  2 upcoming",
+    "github": "https://github.com"
+  },
+  {
+    "id": "06",
+    "slug": "compliance-to-policy-pipeline",
+    "title": "Compliance-to-policy pipeline",
+    "difficulty": "medium",
+    "description": "CI/CD pipeline converting OSCAL profiles into executable OPA/Rego policies via GitHub Actions.",
+    "tech": ["GitHub Actions", "OSCAL", "OPA/Rego", "Python"],
+    "overview": "Full GitOps compliance-as-code workflow: commit an OSCAL profile, get executable enforcement policy. The pipeline parses control selections from OSCAL, generates Rego rules per control, runs tests, and deploys to the OPA enforcement tier — entirely automated.",
+    "details": "Triggered on OSCAL file changes in the repo. Parses control baselines, generates one Rego rule per control with correct metadata, runs policy unit tests (one per rule), produces a coverage report, deploys to OPA, and posts a pass/fail summary as a GitHub PR check.",
+    "demo": "[PR #44] Add FedRAMP Moderate profile\n\n  Parsing: oscal-fedramp-moderate.xml\n  Controls selected: 325\n\n  Generating Rego rules...\n  ✓ 325 / 325 rules generated\n\n  Running policy tests...\n  ✓ 325 / 325 tests passed\n\n  Deploying to OPA...\n  ✓ Bundle pushed: compliance-v2.4.1\n\n  PR check: PASSED ✓",
+    "github": "https://github.com"
+  },
+  {
+    "id": "07",
+    "slug": "aws-config-ai-remediator",
+    "title": "AWS Config + AI remediator",
+    "difficulty": "hard",
+    "description": "Config detects violations, Claude API generates intelligent fixes, Lambda executes them autonomously.",
+    "tech": ["AWS Config", "Claude API", "Lambda", "Python", "SNS"],
+    "overview": "Intelligent autonomous remediation. AWS Config violations trigger a Lambda that calls the Claude API with full resource context, receives a generated remediation action, applies it via the AWS SDK, and re-evaluates the rule — closing the loop without human intervention.",
+    "details": "Example: non-encrypted S3 bucket → Config FAIL → Lambda invoked with resource ARN and violation context → Claude generates least-privilege encryption policy JSON → Lambda applies BucketEncryption → Config re-evaluates → finding closed. Full audit trail in DynamoDB. Human-in-the-loop mode available for critical resources.",
+    "demo": "[Config] NON_COMPLIANT: s3-prod-data\n  Rule:    s3-bucket-server-side-encryption\n  Control: SC-28\n\n[Lambda] Invoking Claude API...\n  Context: S3 bucket, SSE missing, prod env\n  Generating remediation action...\n\n[Claude] → Apply SSE with aws:kms (KMS CMK)\n         → Key: arn:aws:kms:us-east-1:...\n         → Estimated impact: none\n\n[Lambda] Applying patch...\n✓ BucketEncryption set\n[Config] Re-evaluating... COMPLIANT\n✓ Finding closed  ·  elapsed: 4.2s",
+    "github": "https://github.com"
+  },
+  {
+    "id": "08",
+    "slug": "continuous-controls-monitoring",
+    "title": "Continuous controls monitoring",
+    "difficulty": "hard",
+    "description": "Production system polling 52 controls hourly, scoring health, tracking drift, auto-generating evidence.",
+    "tech": ["Python", "EC2", "DynamoDB", "SNS", "CloudWatch"],
+    "overview": "Replaces annual point-in-time audits with real-time continuous monitoring. Distributed agent architecture: agents evaluate controls against current infrastructure state hourly, score implementation strength, track drift over time, and alert on regressions.",
+    "details": "Each control maps to one or more evaluator functions. Agents run on EC2, poll control state, persist results to DynamoDB with timestamps, maintain a 90-day trend history, send SNS alerts on any PASS→FAIL transition, and automatically generate evidence bundles on schedule.",
+    "demo": "[CCM] Hourly sweep started · 09:00Z\n  Controls in scope: 52\n\n  [AC-2]  Account Mgmt     PASS  ✓\n  [AU-9]  Audit Protection FAIL  ✗  ← degraded\n  [SC-28] Encryption       PASS  ✓\n  [IA-5]  Auth Mgmt        PASS  ✓\n  ... (48 more)\n\n  Result: 49 PASS · 3 FAIL\n\n  ALERT → SNS: AU-9 drift detected\n  Evidence → s3://audit/2025-04-16/bundle.zip",
+    "github": "https://github.com"
+  },
+  {
+    "id": "09",
+    "slug": "fedramp-automation-oscal",
+    "title": "FedRAMP automation (OSCAL)",
+    "difficulty": "hard",
+    "description": "End-to-end FedRAMP pipeline: SSP generation, automated assessment, POA&M tracking — all OSCAL.",
+    "tech": ["OSCAL", "Python", "Terraform", "GitHub Actions"],
+    "overview": "Complete FedRAMP documentation lifecycle as code. Starting from infrastructure state and control implementation data, the pipeline generates a compliant OSCAL System Security Plan, runs an automated assessment, produces an Assessment Report, and creates and tracks a POA&M.",
+    "details": "Infrastructure inventory → OSCAL SSP with all 325 Moderate controls documented → automated assessment runners evaluate each control → OSCAL SAR generated with findings → POA&M items created for failures with target dates → continuous ATO workflow with monthly re-assessment on schedule.",
+    "demo": "[Pipeline] FedRAMP Moderate · rev5\n\n  Stage 1: Generate SSP\n  ✓ 325 controls documented\n  ✓ OSCAL SSP v1.1.2 generated\n\n  Stage 2: Automated assessment\n  ✓ 301 controls  SATISFIED\n  ✗  24 controls  NOT SATISFIED\n\n  Stage 3: Generate artifacts\n  ✓ OSCAL SAR generated\n  ✓ POA&M: 24 items created\n\n  Artifacts → s3://fedramp-artifacts/",
+    "github": "https://github.com"
+  },
+  {
+    "id": "10",
+    "slug": "ai-powered-control-gap-analyzer",
+    "title": "AI-powered control gap analyzer",
+    "difficulty": "hard",
+    "description": "Claude API analyzes live AWS infrastructure, identifies NIST gaps, and generates Terraform remediation.",
+    "tech": ["Claude API", "Python", "AWS SDK", "Terraform", "NIST 800-53"],
+    "overview": "Advanced AI system that crawls a live AWS environment, maps every resource configuration to the NIST 800-53 control catalog, sends findings to Claude for deep gap analysis, and produces a prioritized report with generated, ready-to-apply Terraform remediation code.",
+    "details": "Crawls 18+ AWS services via boto3, maps resource configs to applicable NIST controls, identifies gaps between current state and baseline requirements, sends context-rich prompts to Claude API for analysis and fix generation, and outputs a ranked gap report with Terraform HCL files per finding.",
+    "demo": "Scanning AWS environment...\n  Services: 18  ·  Resources: 847\n\n  Mapping to NIST 800-53 Moderate...\n  ✓ 847 resources mapped\n\n  Invoking Claude gap analysis...\n  ────────────────────────────────\n  Gaps identified: 23\n  ├─ CRITICAL   7  (immediate risk)\n  ├─ HIGH       9\n  └─ MEDIUM     7\n\n  Generating Terraform fixes...\n  ✓ 23 .tf files written\n  ✓ Gap report → gap-report.html",
+    "github": "https://github.com"
+  }
+]

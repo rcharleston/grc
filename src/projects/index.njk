@@ -1,0 +1,28 @@
+---
+layout: layouts/base.njk
+title: Projects
+description: Portfolio of GRC-as-code projects — OSCAL tooling, OPA policies, AI-assisted remediation, and continuous compliance monitoring.
+permalink: /projects/
+---
+<section class="section" style="padding-top:140px;">
+  <div class="section-header fade-in">
+    <div class="section-left">
+      <div class="section-tag">// Portfolio</div>
+      <h2 class="section-title">All<br><em>projects</em></h2>
+    </div>
+    <p class="section-desc">From foundational OSCAL tooling to AI-powered remediation. Enterprise-grade systems across the full complexity spectrum.</p>
+  </div>
+
+  <div class="filter-row">
+    <button class="ftab active" data-f="all">All</button>
+    <button class="ftab" data-f="easy">Beginner</button>
+    <button class="ftab" data-f="medium">Intermediate</button>
+    <button class="ftab" data-f="hard">Advanced</button>
+  </div>
+
+  <div class="projects-grid">
+    {% for p in projects %}
+      {% include "partials/project-card.njk" %}
+    {% endfor %}
+  </div>
+</section>

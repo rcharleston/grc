@@ -1,0 +1,30 @@
+---
+layout: layouts/base.njk
+title: Writing
+description: Technical writing on GRC engineering, automation, OSCAL, OPA policy-as-code, and building compliant cloud infrastructure.
+permalink: /blog/
+---
+<section class="section" style="padding-top:140px;">
+  <div class="section-header fade-in">
+    <div class="section-left">
+      <div class="section-tag">// Writing</div>
+      <h2 class="section-title">From the<br><em>blog</em></h2>
+    </div>
+    <p class="section-desc">Technical writing on GRC engineering, automation, and building compliant cloud infrastructure.</p>
+  </div>
+
+  {% if collections.posts.length %}
+  <div class="blog-grid fade-in">
+    {% for post in collections.posts %}
+    <a href="{{ post.url }}" class="blog-card">
+      <div class="blog-meta">{{ post.date | dateReadable | upper }}{% if post.data.readTime %} · {{ post.data.readTime }}{% endif %}</div>
+      <div class="blog-title">{{ post.data.title }}</div>
+      <div class="blog-excerpt">{{ post.data.description }}</div>
+      <span class="blog-link">Read post ↗</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="section-desc" style="max-width:none;">No posts yet — check back soon.</p>
+  {% endif %}
+</section>

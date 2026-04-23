@@ -1,0 +1,52 @@
+---
+layout: layouts/base.njk
+title: About
+description: Roman is a cybersecurity professional with three years across security engineering, cloud security, operations, and GRC. Focus on GRC-as-code.
+permalink: /about/
+---
+<section class="section" style="padding-top:140px;">
+  <div class="section-header fade-in">
+    <div class="section-left">
+      <div class="section-tag">// About</div>
+      <h2 class="section-title">Who<br><em>I am</em></h2>
+    </div>
+    <p class="section-desc">A cybersecurity professional with three years across security engineering, cloud security, operations, and GRC.</p>
+  </div>
+
+  <div class="about-grid fade-in">
+    <div class="about-left">
+      <p class="about-text">I'm Roman — a cybersecurity professional with three years of experience spanning security engineering, cloud security, security operations, and governance, risk, and compliance. I've worked across internships at Fortune 500 companies, state government, and financial services — each building a different dimension of the security picture.</p>
+      <p class="about-text">My focus now is GRC-as-Code: treating compliance as a software engineering problem. That means Python automation, infrastructure-as-code, OSCAL data models, and AI-assisted remediation — not spreadsheets and manual checklists.</p>
+      <p class="about-text">Currently completing a BS in Cybersecurity and Information Assurance at WGU. I write about compliance engineering on <a href="/blog/" style="color:var(--accent)">this blog</a> and share tooling on <a href="{{ site.social.github }}" style="color:var(--accent)">GitHub</a>.</p>
+
+      <div class="section-tag" style="margin-top:40px;margin-bottom:16px">Certifications</div>
+      <div class="cert-grid">
+        {% for c in certifications %}
+        <div class="cert-item"><strong>{{ c.name }}</strong>{{ c.issuer }}</div>
+        {% endfor %}
+      </div>
+
+      <div class="section-tag" style="margin-top:32px;margin-bottom:12px">Education</div>
+      <div class="cert-grid">
+        <div class="cert-item" style="grid-column:1/-1"><strong>BS Cybersecurity &amp; Information Assurance</strong>Western Governors University · In progress</div>
+        <div class="cert-item" style="grid-column:1/-1"><strong>AAS IT – Cybersecurity</strong>Completed</div>
+      </div>
+    </div>
+
+    <div class="about-right">
+      <div class="section-tag" style="margin-bottom:24px">Experience</div>
+      <div class="timeline">
+        {% for e in experience %}
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <div class="tl-date">{{ e.date }}</div>
+            <div class="tl-title">{{ e.title }}</div>
+            <div class="tl-sub">{{ e.description }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
