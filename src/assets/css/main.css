@@ -39,6 +39,36 @@ body {
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
 
+/* ── A11Y: SKIP LINK + FOCUS ── */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 12px;
+  z-index: 999;
+  padding: 10px 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+.skip-link:focus { top: 12px; outline: 2px solid var(--text); outline-offset: 2px; }
+
+:focus { outline: none; }
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.nav-cta:focus-visible,
+.btn-primary:focus-visible,
+.btn-ghost:focus-visible,
+.dp-github:focus-visible,
+.ftab:focus-visible { outline-offset: 2px; }
+
 /* ── NOISE TEXTURE OVERLAY ── */
 body::before {
   content: '';
@@ -149,17 +179,31 @@ nav {
   z-index: 1;
 }
 
-/* grid bg */
+/* aurora mesh bg */
 .hero::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 50%, black 30%, transparent 100%);
+  inset: -15%;
+  background:
+    radial-gradient(ellipse 45% 55% at 18% 28%, rgba(91,123,255,0.22), transparent 62%),
+    radial-gradient(ellipse 40% 45% at 82% 68%, rgba(125,95,255,0.16), transparent 64%),
+    radial-gradient(ellipse 35% 40% at 55% 88%, rgba(62,207,142,0.09), transparent 66%),
+    radial-gradient(ellipse 38% 32% at 74% 12%, rgba(91,123,255,0.12), transparent 60%);
+  filter: blur(70px);
+  animation: auroraDrift 32s ease-in-out infinite alternate;
+  will-change: transform;
+  pointer-events: none;
+}
+
+@keyframes auroraDrift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  33%  { transform: translate3d(2.5%, -1.8%, 0) scale(1.04); }
+  66%  { transform: translate3d(-2%, 2.2%, 0) scale(0.97); }
+  100% { transform: translate3d(1.2%, 1.5%, 0) scale(1.02); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero::before { animation: none; }
 }
 
 /* glow */

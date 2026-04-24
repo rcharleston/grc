@@ -12,9 +12,12 @@
 <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="/feed.xml">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to content</a>
 {% include "partials/nav.njk" %}
 
+<main id="main-content">
 {{ content | safe }}
+</main>
 
 {% include "partials/footer.njk" %}
 
