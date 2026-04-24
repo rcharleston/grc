@@ -1202,11 +1202,13 @@ hr.sec-div {
   --glass-blur-soft: blur(14px) saturate(155%);
 }
 
-/* NAV — deeper frosted glass with rim highlight */
+/* NAV — deeper frosted glass with rim highlight.
+   Uses its own blur spec with lower saturation so the aurora's
+   blue blob doesn't bleed through as a color cast at the top. */
 nav {
-  background: rgba(18,20,25,0.55);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  background: rgba(18,20,25,0.72);
+  backdrop-filter: blur(26px) saturate(130%);
+  -webkit-backdrop-filter: blur(26px) saturate(130%);
   border-bottom: 1px solid var(--glass-border);
   box-shadow: var(--glass-rim), 0 4px 24px rgba(0,0,0,0.25);
 }
