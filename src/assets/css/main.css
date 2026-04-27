@@ -1167,6 +1167,55 @@ hr.sec-div {
   transform: translateY(0);
 }
 
+/* ── VIEW TRANSITIONS (cross-page smooth nav, supporting browsers only) ── */
+@view-transition { navigation: auto; }
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 280ms;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+::view-transition-old(root) { animation-name: vt-fade-out; }
+::view-transition-new(root) { animation-name: vt-fade-in; }
+
+@keyframes vt-fade-out { to { opacity: 0; transform: translateY(-4px); } }
+@keyframes vt-fade-in  { from { opacity: 0; transform: translateY(6px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation-duration: 0.001s; }
+}
+
+/* Persist the nav across page transitions so it doesn't flicker. */
+nav { view-transition-name: site-nav; }
+
+/* ── HAMBURGER (default: hidden on desktop) ── */
+.nav-toggle {
+  display: none;
+  width: 36px;
+  height: 32px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+}
+.nav-toggle-bar {
+  display: block;
+  width: 16px;
+  height: 1.5px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+nav.open .nav-toggle-bar:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+nav.open .nav-toggle-bar:nth-child(2) { opacity: 0; }
+nav.open .nav-toggle-bar:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px) {
   nav { padding: 18px 24px; }
@@ -1177,7 +1226,34 @@ hr.sec-div {
   .blog-grid { grid-template-columns: 1fr; }
   .contact-wrap { padding: 40px 24px; }
   footer { padding: 24px; flex-direction: column; align-items: flex-start; }
-  .nav-links { display: none; }
+
+  .nav-toggle { display: flex; order: 3; }
+  .nav-cta { display: none; }
+
+  .nav-links {
+    position: fixed;
+    inset: 64px 0 0 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 24px;
+    background: rgba(18,20,25,0.92);
+    backdrop-filter: blur(24px) saturate(140%);
+    -webkit-backdrop-filter: blur(24px) saturate(140%);
+    border-top: 1px solid var(--border);
+    transform: translateX(100%);
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto;
+  }
+  nav.open .nav-links { transform: translateX(0); }
+  .nav-links li { width: 100%; border-bottom: 1px solid var(--border); }
+  .nav-links a {
+    display: block;
+    padding: 18px 4px;
+    font-size: 16px;
+    letter-spacing: 0.02em;
+    color: var(--text);
+  }
+  .nav-links a.active { color: var(--accent); }
 }
 
 /* ═══════════════════════════════════════════════════════════

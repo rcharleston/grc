@@ -42,7 +42,12 @@ eleventyComputed:
     {% for t in p.tech %}<span class="dp-tech">{{ t }}</span>{% endfor %}
   </div>
 
+  {% set hasRepo = p.github and p.github != "https://github.com" and p.github != "" %}
   <div class="dp-section-label">Source code</div>
-  <p class="dp-text">Full implementation, tests, and documentation available on GitHub.</p>
-  <a href="{{ p.github }}" target="_blank" rel="noopener" class="dp-github">View on GitHub ↗</a>
+  {% if hasRepo %}
+    <p class="dp-text">Full implementation, tests, and documentation available on GitHub.</p>
+    <a href="{{ p.github }}" target="_blank" rel="noopener" class="dp-github">View on GitHub ↗</a>
+  {% else %}
+    <p class="dp-text" style="color:var(--text3);">Source repository in the works — check back soon.</p>
+  {% endif %}
 </section>

@@ -17,3 +17,46 @@
 <meta name="twitter:title" content="{{ pageTitle }}">
 <meta name="twitter:description" content="{{ pageDesc }}">
 <meta name="twitter:image" content="{{ site.url }}{{ pageImage }}">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "{{ site.url }}/#person",
+      "name": "{{ site.author }}",
+      "url": "{{ site.url }}/",
+      "jobTitle": "GRC Engineer",
+      "description": "{{ site.description }}",
+      "sameAs": [
+        "{{ site.social.github }}",
+        "{{ site.social.linkedin }}",
+        "{{ site.social.medium }}"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "{{ site.url }}/#website",
+      "url": "{{ site.url }}/",
+      "name": "{{ site.title }}",
+      "description": "{{ site.tagline }}",
+      "publisher": { "@id": "{{ site.url }}/#person" },
+      "inLanguage": "en-US"
+    }{% if ogType == 'article' %},
+    {
+      "@type": "BlogPosting",
+      "@id": "{{ pageUrl }}#article",
+      "headline": "{{ pageTitle }}",
+      "description": "{{ pageDesc }}",
+      "url": "{{ pageUrl }}",
+      "image": "{{ site.url }}{{ pageImage }}",
+      "datePublished": "{{ page.date | dateISO }}",
+      "dateModified": "{{ page.date | dateISO }}",
+      "author": { "@id": "{{ site.url }}/#person" },
+      "publisher": { "@id": "{{ site.url }}/#person" },
+      "mainEntityOfPage": "{{ pageUrl }}"
+    }{% endif %}
+  ]
+}
+</script>

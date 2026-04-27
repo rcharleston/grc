@@ -37,3 +37,32 @@
     });
   });
 })();
+
+// Mobile nav toggle — hamburger opens/closes the nav links sheet.
+(function () {
+  const toggle = document.querySelector(".nav-toggle");
+  const menu = document.getElementById("nav-menu");
+  const navEl = document.querySelector("nav");
+  if (!toggle || !menu || !navEl) return;
+
+  const close = () => {
+    navEl.classList.remove("open");
+    toggle.setAttribute("aria-expanded", "false");
+    document.body.style.overflow = "";
+  };
+  const open = () => {
+    navEl.classList.add("open");
+    toggle.setAttribute("aria-expanded", "true");
+    document.body.style.overflow = "hidden";
+  };
+
+  toggle.addEventListener("click", () => {
+    navEl.classList.contains("open") ? close() : open();
+  });
+  menu.addEventListener("click", (e) => {
+    if (e.target.tagName === "A") close();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navEl.classList.contains("open")) close();
+  });
+})();

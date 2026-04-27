@@ -4,6 +4,7 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addPassthroughCopy("src/CNAME");
   eleventyConfig.addPassthroughCopy("src/favicon.svg");
+  eleventyConfig.addPassthroughCopy("src/site.webmanifest");
 
   eleventyConfig.addCollection("posts", (api) =>
     api.getFilteredByGlob("src/posts/*.md").sort((a, b) => b.date - a.date)
