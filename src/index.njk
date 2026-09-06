@@ -3,15 +3,35 @@ layout: layouts/base.njk
 title: null
 description: Roman builds intelligent compliance infrastructure — OSCAL tooling, OPA policies, and AI-assisted remediation. Portfolio, blog, and contact.
 ---
-<section class="hero" style="text-align:center;align-items:center;">
-  <div class="hero-inner" style="display:flex;flex-direction:column;align-items:center;">
-    <h1 style="text-align:center;">Governance, Risk,<br>and Compliance,<br><em>engineered.</em></h1>
-    <p class="hero-sub">// autonomous governance at machine speed</p>
-    <p class="hero-desc" style="text-align:center;margin-left:auto;margin-right:auto;">Building intelligent compliance infrastructure that replaces manual, error-prone workflows with autonomous, policy-as-code systems. OSCAL, OPA, and AI — wired together.</p>
-    <div class="hero-actions" style="justify-content:center;">
-      <a href="/projects/" class="btn-primary">View projects →</a>
-      <a href="/blog/" class="btn-ghost">Read the blog</a>
-      <a href="/contact/" class="btn-ghost">Get in touch</a>
+<section class="hero">
+  <div class="hero-grid">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-tag">// live — autonomous grc</span>
+        <span class="eyebrow-line"></span>
+      </div>
+      <h1>Governance, Risk,<br>and Compliance,<br><em>engineered.</em></h1>
+      <p class="hero-sub">// autonomous governance at machine speed</p>
+      <p class="hero-desc">Building intelligent compliance infrastructure that replaces manual, error-prone workflows with autonomous, policy-as-code systems. OSCAL, OPA, and AI — wired together.</p>
+      <div class="hero-actions">
+        <a href="/projects/" class="btn-primary">View projects →</a>
+        <a href="/blog/" class="btn-ghost">Read the blog</a>
+        <a href="/contact/" class="btn-ghost">Get in touch</a>
+      </div>
+    </div>
+
+    <div class="hero-terminal" aria-hidden="true">
+      <div class="terminal-bar">
+        <span class="t-dot t-red"></span>
+        <span class="t-dot t-yellow"></span>
+        <span class="t-dot t-green"></span>
+        <span class="terminal-title">grc-agent — zsh</span>
+      </div>
+      <div class="terminal-body" id="hero-terminal-feed">
+        <div><span class="t-prompt">$</span> <span class="t-cmd">oscal validate ssp.json --profile fedramp-moderate</span></div>
+        <div class="t-ok">✓ 142 controls mapped · 0 gaps</div>
+        <div><span class="t-prompt">$</span> <span class="t-cursor"></span></div>
+      </div>
     </div>
   </div>
 </section>
