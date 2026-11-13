@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+      <title id="title">Windows Prefetch Analysis</title><desc id="desc">Reconstructing an incident, one execution at a time.</desc>
+      <rect width="1200" height="320" rx="24" fill="#101820"/>
+      <path d="M880 0V320M960 0V320M1040 0V320M1120 0V320M840 80H1200M840 160H1200M840 240H1200" stroke="#223140" stroke-width="1"/>
+      <circle cx="1050" cy="160" r="100" fill="none" stroke="#beabff" stroke-width="2" opacity=".4"/>
+      <circle cx="1050" cy="160" r="70" fill="none" stroke="#beabff" stroke-width="2"/>
+      <text x="1050" y="180" font-family="monospace" font-size="64" fill="#beabff" text-anchor="middle">03</text>
+      <text x="56" y="62" fill="#beabff" font-family="monospace" font-size="15" letter-spacing="3">ROMAN CHARLESTON / SECURITY LABS</text>
+      <text x="56" y="130" fill="#f4f7fc" font-family="Arial,sans-serif" font-size="42" font-weight="700">Windows Prefetch Analysis</text>
+      <text x="56" y="178" fill="#b8c5d6" font-family="Arial,sans-serif" font-size="20">Reconstructing an incident, one execution at a time.</text>
+      <rect x="56" y="226" width="680" height="40" rx="20" fill="#1b2a36"/>
+      <text x="80" y="252" fill="#beabff" font-family="monospace" font-size="15">DFIR  /  PECMD  /  TIMELINE EXPLORER  /  WINDOWS</text>
+    </svg>

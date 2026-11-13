@@ -9,45 +9,15 @@ eleventyComputed:
   title: "{{ p.title }}"
   description: "{{ p.description }}"
 ---
-{% set diffLabel = { easy: "Beginner", medium: "Intermediate", hard: "Advanced" } %}
-<section class="section" style="padding-top:140px;max-width:880px;margin:0 auto;">
+<article class="section project-detail">
   <a href="/projects/" class="post-back">← All projects</a>
-
-  <div class="dp-eyebrow">
-    <span class="pcard-num">{{ p.id }}</span>
-    <span class="diff-badge diff-{{ p.difficulty }}">{{ diffLabel[p.difficulty] | upper }}</span>
-  </div>
-  <h1 class="dp-title">{{ p.title }}</h1>
-  <p class="hero-desc" style="margin-bottom:24px;">{{ p.description }}</p>
-
-  <div class="dp-section-label" style="margin-top:0">Overview</div>
-  <p class="dp-text">{{ p.overview }}</p>
-
-  <div class="dp-section-label">Implementation</div>
-  <p class="dp-text">{{ p.details }}</p>
-
-  <div class="dp-section-label">Terminal output</div>
-  <div class="dp-terminal">
-    <div class="dp-terminal-bar">
-      <span class="t-dot t-red" aria-hidden="true"></span>
-      <span class="t-dot t-yellow" aria-hidden="true"></span>
-      <span class="t-dot t-green" aria-hidden="true"></span>
-      <span class="terminal-title" style="margin-left:auto">{{ p.slug }}.py</span>
-    </div>
-    <div class="dp-terminal-body">{{ p.demo }}</div>
-  </div>
-
-  <div class="dp-section-label">Stack</div>
-  <div class="dp-stack">
-    {% for t in p.tech %}<span class="dp-tech">{{ t }}</span>{% endfor %}
-  </div>
-
-  {% set hasRepo = p.github and p.github != "https://github.com" and p.github != "" %}
-  <div class="dp-section-label">Source code</div>
-  {% if hasRepo %}
-    <p class="dp-text">Full implementation, tests, and documentation available on GitHub.</p>
-    <a href="{{ p.github }}" target="_blank" rel="noopener" class="dp-github">View on GitHub ↗</a>
-  {% else %}
-    <p class="dp-text" style="color:var(--text3);">Source repository in the works — check back soon.</p>
-  {% endif %}
-</section>
+  {% if p.cover %}<img class="case-banner" src="{{ p.cover }}" alt="{{ p.title }}" width="1200" height="320">{% endif %}
+  <div class="dp-eyebrow"><span class="pcard-num">{{ p.category }}</span><span class="diff-badge status-{{ p.status }}">{% if p.status == "completed" %}DOCUMENTED LAB{% else %}CONCEPT{% endif %}</span></div>
+  <h1 class="dp-title">{{ p.title }}</h1><p class="hero-desc">{{ p.description }}</p>
+  {% if p.github %}<div class="case-actions"><a class="btn-primary" href="{{ p.github }}" target="_blank" rel="noopener">Explore the repository ↗</a><a class="btn-ghost" href="{{ p.article }}" target="_blank" rel="noopener">Original walkthrough ↗</a></div>{% endif %}
+  <h2 class="dp-section-label">{% if p.status == "completed" %}The work{% else %}Proposed work{% endif %}</h2><p class="dp-text">{{ p.overview }}</p><p class="dp-text">{{ p.details }}</p>
+  {% if p.outcomes.length %}<h2 class="dp-section-label">Evidence and outcomes</h2><ul class="case-outcomes">{% for item in p.outcomes %}<li>{{ item }}</li>{% endfor %}</ul>{% endif %}
+  {% if p.image %}<figure class="case-evidence"><img src="{{ p.image }}" alt="{{ p.imageAlt }}" width="1100" height="467" loading="lazy"><figcaption>{{ p.imageAlt }}. Source: Roman Charleston's original walkthrough.</figcaption></figure>{% endif %}
+  <aside class="scope-note"><h2>Scope &amp; limitations</h2><p>{{ p.limitations }}</p></aside>
+  <h2 class="dp-section-label">Tools and technologies</h2><div class="dp-stack">{% for t in p.tech %}<span class="dp-tech">{{ t }}</span>{% endfor %}</div>
+</article>

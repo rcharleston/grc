@@ -13,6 +13,7 @@ permalink: /blog/
     <p class="section-desc">Technical writing on GRC engineering, automation, and building compliant cloud infrastructure.</p>
   </div>
 
+  <div class="blog-grid fade-in" style="margin-bottom:32px;">{% for post in writing %}<a href="{{ post.url }}" class="blog-card" target="_blank" rel="noopener"><div class="blog-meta">{{ post.date }} · MEDIUM</div><div class="blog-title">{{ post.title }}</div><div class="blog-excerpt">{{ post.description }}</div><span class="blog-link">Read the original ↗</span></a>{% endfor %}</div>
   {% if collections.posts.length %}
   <div class="blog-grid fade-in">
     {% for post in collections.posts %}

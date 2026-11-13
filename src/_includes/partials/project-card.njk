@@ -1,13 +1,6 @@
-{% set diffLabel = { easy: "Beginner", medium: "Intermediate", hard: "Advanced" } %}
-<a href="/projects/{{ p.slug }}/" class="pcard fade-in" data-difficulty="{{ p.difficulty }}">
-  <div class="pcard-top">
-    <span class="pcard-num">{{ p.id }}</span>
-    <span class="diff-badge diff-{{ p.difficulty }}">{{ diffLabel[p.difficulty] | upper }}</span>
-  </div>
-  <div class="pcard-title">{{ p.title }}</div>
-  <div class="pcard-desc">{{ p.description }}</div>
-  <div class="pcard-tags">
-    {% for t in p.tech %}<span class="ptag">{{ t }}</span>{% endfor %}
-  </div>
-  <div class="pcard-arrow" aria-hidden="true">→</div>
+<a href="/projects/{{ p.slug }}/" class="pcard fade-in" data-status="{{ p.status }}">
+  {% if p.cover %}<img class="project-cover" src="{{ p.cover }}" alt="" width="1200" height="320" loading="lazy">{% endif %}
+  <div class="pcard-top"><span class="pcard-num">{{ p.id }} / {{ p.category }}</span><span class="diff-badge status-{{ p.status }}">{% if p.status == "completed" %}DOCUMENTED LAB{% else %}CONCEPT{% endif %}</span></div>
+  <div class="pcard-title">{{ p.title }}</div><div class="pcard-desc">{{ p.description }}</div>
+  <div class="pcard-tags">{% for t in p.tech %}<span class="ptag">{{ t }}</span>{% endfor %}</div><div class="pcard-arrow" aria-hidden="true">→</div>
 </a>

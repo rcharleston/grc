@@ -19,23 +19,17 @@
   els.forEach((el) => observer.observe(el));
 })();
 
-// Project filter tabs — present on /projects/ only.
+// Filter by publication status.
 (function () {
-  const tabs = document.querySelectorAll(".ftab");
-  const cards = document.querySelectorAll("[data-difficulty]");
+  const tabs = document.querySelectorAll('.ftab');
+  const cards = document.querySelectorAll('[data-status]');
   if (!tabs.length || !cards.length) return;
-
-  tabs.forEach((btn) => {
-    btn.addEventListener("click", () => {
-      tabs.forEach((b) => b.classList.remove("active"));
-      btn.classList.add("active");
-      const f = btn.dataset.f;
-      cards.forEach((card) => {
-        const show = f === "all" || card.dataset.difficulty === f;
-        card.style.display = show ? "" : "none";
-      });
-    });
-  });
+  const filter = (value) => {
+    tabs.forEach(b => { const active = b.dataset.f === value; b.classList.toggle('active', active); b.setAttribute('aria-pressed', String(active)); });
+    cards.forEach(card => { card.hidden = value !== 'all' && card.dataset.status !== value; });
+  };
+  tabs.forEach(btn => btn.addEventListener('click', () => filter(btn.dataset.f)));
+  filter('completed');
 })();
 
 // Mobile nav toggle — hamburger opens/closes the nav links sheet.

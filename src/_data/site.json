@@ -1,14 +1,14 @@
 {
   "title": "grcengineer.io",
   "tagline": "Governance, Risk, and Compliance, engineered.",
-  "description": "Roman builds intelligent compliance infrastructure — OSCAL tooling, OPA policies, and AI-assisted remediation. Portfolio, blog, and contact.",
+  "description": "Cloud security, security operations, and GRC through documented labs, source code, and clear evidence. A portfolio by Roman Charleston.",
   "url": "https://grcengineer.io",
-  "author": "Roman",
+  "author": "Roman Charleston",
   "email": "contact@grcengineer.io",
   "social": {
-    "github": "https://github.com/rcharleston/grc",
+    "github": "https://github.com/rcharleston",
     "linkedin": "https://linkedin.com/in/romancharleston",
-    "medium": "https://medium.com"
+    "medium": "https://medium.com/@romancharleston"
   },
   "ogImage": "/assets/og-default.png"
 }

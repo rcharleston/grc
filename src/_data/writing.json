@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Building and assessing a vulnerable AWS environment",
+    "description": "My capstone: Terraform, CSPM findings, remediation, and the limits of scan scores.",
+    "url": "https://medium.com/@romancharleston/i-built-a-vulnerable-aws-environment-for-my-capstone-class-f30b8e108fa6",
+    "date": "JUN 2026",
+    "tag": "AWS / GRC"
+  },
+  {
+    "title": "Building an Azure honeypot with Microsoft Sentinel",
+    "description": "The telemetry pipeline, from Windows events to an enriched workbook.",
+    "url": "https://medium.com/@romancharleston/building-an-azure-honeypot-lab-with-microsoft-sentinel-full-walkthrough-af6851b7795b",
+    "date": "FEB 2026",
+    "tag": "AZURE / SOC"
+  },
+  {
+    "title": "Prefetch analysis home lab",
+    "description": "An investigation walkthrough: execution timelines, pivots, and evidence limits.",
+    "url": "https://medium.com/@romancharleston/prefetch-analysis-home-lab-4c9e376c9e01",
+    "date": "DEC 2025",
+    "tag": "WINDOWS / DFIR"
+  }
+]

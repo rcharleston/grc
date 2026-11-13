@@ -1494,3 +1494,32 @@ nav {
   .cert-item { background: var(--bg2); }
   .detail-overlay { background: rgba(10,11,14,0.92); }
 }
+
+/* Evidence-first project presentation. */
+.section { max-width:1280px; margin-inline:auto; }
+.projects-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.pcard { display:flex; flex-direction:column; }
+.pcard .pcard-top { flex-direction:column; align-items:flex-start; }
+.pcard .pcard-tags { margin-top:auto; padding-top:22px; }
+@media (max-width:1000px) { .projects-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:640px) { .projects-grid { grid-template-columns:1fr; } }
+.status-completed { color:var(--green); background:var(--green-dim); }
+.status-concept { color:var(--amber); background:var(--amber-dim); }
+.project-cover { display:block; width:100%; height:auto; border-radius:10px; margin-bottom:24px; }
+.pcard-top { gap:12px; flex-wrap:wrap; }
+.pcard-num { line-height:1.5; }
+.project-detail { padding-top:140px; max-width:940px; margin:0 auto; }
+.project-detail .hero-desc { opacity:1; animation:none; transform:none; }
+.case-banner { width:100%; height:auto; border-radius:16px; margin:24px 0 32px; }
+.case-actions { display:flex; flex-wrap:wrap; gap:16px; margin:28px 0 40px; }
+.case-outcomes { padding-left:24px; color:var(--text2); line-height:1.9; }
+.case-outcomes li { margin-bottom:10px; }
+.case-evidence { margin:32px 0; }
+.case-evidence img { width:100%; height:auto; border:1px solid var(--border); border-radius:12px; }
+.case-evidence figcaption { color:var(--text3); font-size:12px; margin-top:10px; }
+.scope-note { border:1px solid var(--border2); border-left:3px solid var(--accent); border-radius:10px; padding:24px; margin:32px 0; background:var(--bg2); }
+.scope-note h2 { font-size:16px; margin:0 0 12px; }
+.scope-note p { color:var(--text2); }
+[hidden] { display:none !important; }
+@media (max-width:640px) { .project-detail { padding-top:110px; } .pcard-top { align-items:flex-start; } }
+@media (prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } .fade-in { opacity:1; transform:none; transition:none; } }
