@@ -1,6 +1,14 @@
 const slugify = require("slugify");
+const { createHash } = require("node:crypto");
+const { readFileSync } = require("node:fs");
+const path = require("node:path");
 
 module.exports = function (eleventyConfig) {
+  eleventyConfig.addFilter("assetUrl", (url) => {
+    const contents = readFileSync(path.join(__dirname, "src", url));
+    const version = createHash("sha256").update(contents).digest("hex").slice(0, 12);
+    return `${url}?v=${version}`;
+  });
   eleventyConfig.addPassthroughCopy({ "src/assets": "assets" });
   eleventyConfig.addPassthroughCopy("src/CNAME");
   eleventyConfig.addPassthroughCopy("src/favicon.svg");
