@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 title: null
-description: Roman Charleston documents cloud security assessments, telemetry pipelines, and forensic investigations with inspectable source material.
+description: "Roman Charleston's security portfolio: documented cloud and forensic labs, plus GRC engineering projects covering risk, controls, and audit evidence."
 ---
 <section class="hero" style="text-align:center;align-items:center;">
   <div class="hero-inner" style="display:flex;flex-direction:column;align-items:center;">
@@ -10,7 +10,7 @@ description: Roman Charleston documents cloud security assessments, telemetry pi
     <p class="hero-desc" style="text-align:center;margin-left:auto;margin-right:auto;">I connect technical security work to understandable risk. Explore the labs, source material, and reasoning behind my cloud assessments and investigations.</p>
     <div class="hero-actions" style="justify-content:center;">
       <a href="/projects/" class="btn-primary">View projects →</a>
-      <a href="/blog/" class="btn-ghost">Read the blog</a>
+      <a href="#grc-in-progress" class="btn-ghost">GRC work in progress ↓</a>
       <a href="/contact/" class="btn-ghost">Get in touch</a>
     </div>
   </div>
@@ -22,8 +22,8 @@ description: Roman Charleston documents cloud security assessments, telemetry pi
     <div class="stat-lbl">Documented Labs</div>
   </div>
   <div class="stat-item">
-    <div class="stat-num">2</div>
-    <div class="stat-lbl">Cloud Platforms</div>
+    <div class="stat-num">10</div>
+    <div class="stat-lbl">GRC Projects in Progress</div>
   </div>
   <div class="stat-item">
     <div class="stat-num">3yr</div>
@@ -35,11 +35,31 @@ description: Roman Charleston documents cloud security assessments, telemetry pi
   </div>
 </div>
 
+<section class="section" id="grc-in-progress">
+  <div class="section-header fade-in">
+    <div class="section-left">
+      <div class="section-tag">// 01 — GRC engineering · In progress</div>
+      <h2 class="section-title">Risk. Controls.<br><em>Audit evidence.</em></h2>
+    </div>
+    <p class="section-desc">Practical GRC workflows, built around the people who use them. These projects are in scope and design, with planned deliverables below.</p>
+  </div>
+  <div class="projects-grid">
+    {% for p in projects %}{% if p.featuredGrc %}
+      {% include "partials/project-card.njk" %}
+    {% endif %}{% endfor %}
+  </div>
+  <div style="text-align:center;margin-top:40px;">
+    <a href="/projects/#in-progress" class="btn-primary">Explore all 10 in-progress projects →</a>
+  </div>
+</section>
+
+<hr class="sec-div">
+
 <section class="section">
   <div class="section-header fade-in">
     <div class="section-left">
-      <div class="section-tag">// 01 — Portfolio</div>
-      <h2 class="section-title">Featured<br><em>projects</em></h2>
+      <div class="section-tag">// 02 — Documented labs</div>
+      <h2 class="section-title">Security work.<br><em>Evidence included.</em></h2>
     </div>
     <p class="section-desc">Start with the AWS assessment, follow the Azure telemetry pipeline, or work through a forensic timeline.</p>
   </div>
@@ -51,7 +71,7 @@ description: Roman Charleston documents cloud security assessments, telemetry pi
   </div>
 
   <div style="text-align:center;margin-top:40px;">
-    <a href="/projects/" class="btn-ghost">View labs &amp; roadmap →</a>
+    <a href="/projects/#completed" class="btn-ghost">Explore documented labs →</a>
   </div>
 </section>
 
@@ -60,7 +80,7 @@ description: Roman Charleston documents cloud security assessments, telemetry pi
 <section class="section">
   <div class="section-header fade-in">
     <div class="section-left">
-      <div class="section-tag">// 02 — Latest writing</div>
+      <div class="section-tag">// 03 — Latest writing</div>
       <h2 class="section-title">From the<br><em>blog</em></h2>
     </div>
     <p class="section-desc">Technical writing on GRC engineering, automation, and building compliant cloud infrastructure.</p>

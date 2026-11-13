@@ -77,126 +77,159 @@
     "cover": "/assets/projects/windows-prefetch-analysis.svg"
   },
   {
-    "id": "C01",
+    "id": "G01",
     "slug": "oscal-profile-validator",
     "title": "OSCAL profile validator",
-    "status": "concept",
-    "category": "Roadmap concept",
-    "description": "CLI tool validating NIST OSCAL profiles with real-time error detection and multi-format conversion.",
+    "status": "in-progress",
+    "category": "Compliance engineering",
+    "description": "A planned validation workflow for OSCAL profiles, with readable errors and versioned control selections.",
     "tech": [
       "OSCAL",
       "Python",
       "JSON Schema",
       "Click"
     ],
-    "overview": "A proposed GRC engineering project from the original portfolio roadmap. This is not a completed implementation.",
-    "details": "Source code, validation results, and a completed case study have not been published for this concept.",
+    "overview": "The goal is to make machine-readable control profiles easier to review before they enter an assessment workflow.",
+    "details": "Current phase: scope and design. Implementation and validation are planned next; the deliverables below describe the intended work.",
     "github": "",
     "outcomes": [],
-    "limitations": "Concept only. Earlier illustrative terminal output has been removed from this page."
+    "limitations": "In progress. This page documents the project scope; source code, test results, and a completed case study have not yet been published.",
+    "deliverables": [
+      "A small set of valid and invalid sample profiles.",
+      "Schema-validation rules with readable error reports.",
+      "CLI usage notes and checks for common profile mistakes."
+    ]
   },
   {
-    "id": "C02",
+    "id": "G02",
     "slug": "compliance-evidence-crawler",
     "title": "Compliance evidence crawler",
-    "status": "concept",
-    "category": "Roadmap concept",
-    "description": "AWS Lambda collecting compliance evidence from CloudTrail, Config, and Security Hub on a schedule.",
+    "status": "in-progress",
+    "category": "Audit evidence",
+    "description": "An evidence collection workflow with control references, collection dates, ownership, and an audit-ready evidence index.",
     "tech": [
       "AWS Lambda",
       "Python",
       "CloudWatch Events",
       "S3"
     ],
-    "overview": "A proposed GRC engineering project from the original portfolio roadmap. This is not a completed implementation.",
-    "details": "Source code, validation results, and a completed case study have not been published for this concept.",
+    "overview": "The project will connect recurring audit requests to a repeatable evidence collection process. The design covers collection from AWS services, evidence ownership, freshness, and review before an audit package is shared.",
+    "details": "Current phase: scope and design. Implementation and validation are planned next; the deliverables below describe the intended work.",
     "github": "",
     "outcomes": [],
-    "limitations": "Concept only. Earlier illustrative terminal output has been removed from this page."
+    "limitations": "In progress. This page documents the project scope; source code, test results, and a completed case study have not yet been published.",
+    "featuredGrc": true,
+    "deliverables": [
+      "An evidence request matrix with control references and owners.",
+      "A collection prototype and sanitized sample evidence index.",
+      "Retention, freshness, and reviewer sign-off guidance."
+    ]
   },
   {
-    "id": "C03",
+    "id": "G03",
     "slug": "risk-register-automation",
     "title": "Risk register automation",
-    "status": "concept",
-    "category": "Roadmap concept",
-    "description": "Terraform + Lambda auto-generating risk registers from IaC with NIST 800-53 control mapping.",
+    "status": "in-progress",
+    "category": "Risk management",
+    "description": "A structured risk register linking findings to business impact, likelihood, owners, treatment plans, and review dates.",
     "tech": [
-      "Terraform",
       "Python",
-      "DynamoDB",
-      "NIST 800-53"
+      "Risk scoring",
+      "NIST CSF",
+      "CSV / JSON"
     ],
-    "overview": "A proposed GRC engineering project from the original portfolio roadmap. This is not a completed implementation.",
-    "details": "Source code, validation results, and a completed case study have not been published for this concept.",
+    "overview": "The project will turn technical findings into a risk register that supports business decisions. The design starts with a consistent scoring rubric and a workflow for treatment, acceptance, and periodic review.",
+    "details": "Current phase: scope and design. Implementation and validation are planned next; the deliverables below describe the intended work.",
     "github": "",
     "outcomes": [],
-    "limitations": "Concept only. Earlier illustrative terminal output has been removed from this page."
+    "limitations": "In progress. This page documents the project scope; source code, test results, and a completed case study have not yet been published.",
+    "featuredGrc": true,
+    "deliverables": [
+      "A risk register schema and documented likelihood/impact rubric.",
+      "Synthetic risk examples with ownership and treatment tracking.",
+      "An import/export prototype and management summary."
+    ]
   },
   {
-    "id": "C04",
+    "id": "G04",
     "slug": "policy-as-code-engine-opa",
     "title": "Policy-as-Code engine (OPA)",
-    "status": "concept",
-    "category": "Roadmap concept",
-    "description": "Open Policy Agent ruleset enforcing AWS security compliance via custom Rego policies mapped to NIST controls.",
+    "status": "in-progress",
+    "category": "Policy engineering",
+    "description": "A planned OPA policy library translating selected cloud requirements into testable configuration checks.",
     "tech": [
       "OPA/Rego",
       "AWS API",
       "NIST 800-53",
       "Python"
     ],
-    "overview": "A proposed GRC engineering project from the original portfolio roadmap. This is not a completed implementation.",
-    "details": "Source code, validation results, and a completed case study have not been published for this concept.",
+    "overview": "The scope is a focused set of cloud configuration requirements with a documented link between policy intent, control references, and technical tests.",
+    "details": "Current phase: scope and design. Implementation and validation are planned next; the deliverables below describe the intended work.",
     "github": "",
     "outcomes": [],
-    "limitations": "Concept only. Earlier illustrative terminal output has been removed from this page."
+    "limitations": "In progress. This page documents the project scope; source code, test results, and a completed case study have not yet been published.",
+    "deliverables": [
+      "A small policy-to-control mapping with explicit assumptions.",
+      "Rego rules and synthetic compliant/noncompliant fixtures.",
+      "A test report and exception-handling guidance."
+    ]
   },
   {
-    "id": "C05",
+    "id": "G05",
     "slug": "control-assessment-dashboard",
     "title": "Control assessment dashboard",
-    "status": "concept",
-    "category": "Roadmap concept",
-    "description": "React dashboard with real-time control status, evidence tracking, and audit readiness scoring.",
+    "status": "in-progress",
+    "category": "Control assurance",
+    "description": "A control testing workspace for procedures, evidence, findings, remediation ownership, and assessment status.",
     "tech": [
+      "Control testing",
+      "Evidence tracking",
       "React",
-      "AWS API Gateway",
-      "DynamoDB",
-      "Lambda"
+      "Python"
     ],
-    "overview": "A proposed GRC engineering project from the original portfolio roadmap. This is not a completed implementation.",
-    "details": "Source code, validation results, and a completed case study have not been published for this concept.",
+    "overview": "The project will organize the work behind a control assessment: define the test, request evidence, record results, and follow remediation through review. The design separates missing evidence from an actual control failure.",
+    "details": "Current phase: scope and design. Implementation and validation are planned next; the deliverables below describe the intended work.",
     "github": "",
     "outcomes": [],
-    "limitations": "Concept only. Earlier illustrative terminal output has been removed from this page."
+    "limitations": "In progress. This page documents the project scope; source code, test results, and a completed case study have not yet been published.",
+    "featuredGrc": true,
+    "deliverables": [
+      "A control inventory and repeatable test-procedure templates.",
+      "A dashboard prototype using synthetic assessment records.",
+      "A findings register with owners, due dates, and reviewer notes."
+    ]
   },
   {
-    "id": "C06",
+    "id": "G06",
     "slug": "compliance-to-policy-pipeline",
     "title": "Compliance-to-policy pipeline",
-    "status": "concept",
-    "category": "Roadmap concept",
-    "description": "CI/CD pipeline converting OSCAL profiles into executable OPA/Rego policies via GitHub Actions.",
+    "status": "in-progress",
+    "category": "Compliance engineering",
+    "description": "A planned review pipeline connecting machine-readable control requirements to tested technical policies.",
     "tech": [
       "GitHub Actions",
       "OSCAL",
       "OPA/Rego",
       "Python"
     ],
-    "overview": "A proposed GRC engineering project from the original portfolio roadmap. This is not a completed implementation.",
-    "details": "Source code, validation results, and a completed case study have not been published for this concept.",
+    "overview": "The project will trace selected requirements through policy authoring, review, testing, and versioned release. Human interpretation remains part of the process; a control statement does not automatically become a complete technical test.",
+    "details": "Current phase: scope and design. Implementation and validation are planned next; the deliverables below describe the intended work.",
     "github": "",
     "outcomes": [],
-    "limitations": "Concept only. Earlier illustrative terminal output has been removed from this page."
+    "limitations": "In progress. This page documents the project scope; source code, test results, and a completed case study have not yet been published.",
+    "deliverables": [
+      "A requirement-to-policy traceability record.",
+      "A GitHub Actions prototype for validation and policy tests.",
+      "A sample change-review and release checklist."
+    ]
   },
   {
-    "id": "C07",
+    "id": "G07",
     "slug": "aws-config-ai-remediator",
     "title": "AWS Config + AI remediator",
-    "status": "concept",
-    "category": "Roadmap concept",
-    "description": "Config detects violations, Claude API generates intelligent fixes, Lambda executes them autonomously.",
+    "status": "in-progress",
+    "category": "Remediation workflow",
+    "description": "A planned AWS Config workflow that prepares remediation suggestions for review, approval, and rollback planning.",
     "tech": [
       "AWS Config",
       "Claude API",
@@ -204,19 +237,24 @@
       "Python",
       "SNS"
     ],
-    "overview": "A proposed GRC engineering project from the original portfolio roadmap. This is not a completed implementation.",
-    "details": "Source code, validation results, and a completed case study have not been published for this concept.",
+    "overview": "The scope is a reviewable remediation workflow: collect a configuration finding, draft a proposed change, validate it, and present the evidence to an approver before execution.",
+    "details": "Current phase: scope and design. Implementation and validation are planned next; the deliverables below describe the intended work.",
     "github": "",
     "outcomes": [],
-    "limitations": "Concept only. Earlier illustrative terminal output has been removed from this page."
+    "limitations": "In progress. This page documents the project scope; source code, test results, and a completed case study have not yet been published.",
+    "deliverables": [
+      "Synthetic findings and a proposed-change format.",
+      "A draft-generation prototype with approval and validation steps.",
+      "Rollback guidance and a decision audit trail."
+    ]
   },
   {
-    "id": "C08",
+    "id": "G08",
     "slug": "continuous-controls-monitoring",
     "title": "Continuous controls monitoring",
-    "status": "concept",
-    "category": "Roadmap concept",
-    "description": "Production system polling 52 controls hourly, scoring health, tracking drift, auto-generating evidence.",
+    "status": "in-progress",
+    "category": "Control monitoring",
+    "description": "A planned monitoring workflow for control checks, evidence freshness, exceptions, and accountable follow-up.",
     "tech": [
       "Python",
       "EC2",
@@ -224,38 +262,48 @@
       "SNS",
       "CloudWatch"
     ],
-    "overview": "A proposed GRC engineering project from the original portfolio roadmap. This is not a completed implementation.",
-    "details": "Source code, validation results, and a completed case study have not been published for this concept.",
+    "overview": "The design starts with a small, defined control set and separates a failed check, stale evidence, and an approved exception. It will support recurring review without presenting a single score as proof of compliance.",
+    "details": "Current phase: scope and design. Implementation and validation are planned next; the deliverables below describe the intended work.",
     "github": "",
     "outcomes": [],
-    "limitations": "Concept only. Earlier illustrative terminal output has been removed from this page."
+    "limitations": "In progress. This page documents the project scope; source code, test results, and a completed case study have not yet been published.",
+    "deliverables": [
+      "A scoped control catalog with check definitions and cadence.",
+      "A monitoring prototype using synthetic control results.",
+      "An exception register and evidence-freshness report."
+    ]
   },
   {
-    "id": "C09",
+    "id": "G09",
     "slug": "fedramp-automation-oscal",
     "title": "FedRAMP automation (OSCAL)",
-    "status": "concept",
-    "category": "Roadmap concept",
-    "description": "End-to-end FedRAMP pipeline: SSP generation, automated assessment, POA&M tracking — all OSCAL.",
+    "status": "in-progress",
+    "category": "Assessment documentation",
+    "description": "An OSCAL learning project focused on structured system documentation, assessment records, and POA&M tracking.",
     "tech": [
       "OSCAL",
       "Python",
       "Terraform",
       "GitHub Actions"
     ],
-    "overview": "A proposed GRC engineering project from the original portfolio roadmap. This is not a completed implementation.",
-    "details": "Source code, validation results, and a completed case study have not been published for this concept.",
+    "overview": "The project explores how structured security documentation can link system descriptions, assessment observations, and remediation plans. It is a learning workflow using a fictional system.",
+    "details": "Current phase: scope and design. Implementation and validation are planned next; the deliverables below describe the intended work.",
     "github": "",
     "outcomes": [],
-    "limitations": "Concept only. Earlier illustrative terminal output has been removed from this page."
+    "limitations": "In progress. This page documents the project scope; source code, test results, and a completed case study have not yet been published.",
+    "deliverables": [
+      "A fictional system scope and sample structured documentation.",
+      "A sample POA&M with accountable remediation owners.",
+      "Validation notes and a document traceability walkthrough."
+    ]
   },
   {
-    "id": "C10",
+    "id": "G10",
     "slug": "ai-powered-control-gap-analyzer",
     "title": "AI-powered control gap analyzer",
-    "status": "concept",
-    "category": "Roadmap concept",
-    "description": "Claude API analyzes live AWS infrastructure, identifies NIST gaps, and generates Terraform remediation.",
+    "status": "in-progress",
+    "category": "Gap assessment",
+    "description": "A planned assisted gap-analysis workflow linking observations to control objectives, evidence, and reviewer decisions.",
     "tech": [
       "Claude API",
       "Python",
@@ -263,10 +311,15 @@
       "Terraform",
       "NIST 800-53"
     ],
-    "overview": "A proposed GRC engineering project from the original portfolio roadmap. This is not a completed implementation.",
-    "details": "Source code, validation results, and a completed case study have not been published for this concept.",
+    "overview": "The scope is an assisted drafting tool for gap assessments. The design keeps evidence references, assumptions, and reviewer decisions visible so generated suggestions can be checked before they enter a findings register.",
+    "details": "Current phase: scope and design. Implementation and validation are planned next; the deliverables below describe the intended work.",
     "github": "",
     "outcomes": [],
-    "limitations": "Concept only. Earlier illustrative terminal output has been removed from this page."
+    "limitations": "In progress. This page documents the project scope; source code, test results, and a completed case study have not yet been published.",
+    "deliverables": [
+      "A synthetic assessment dataset and control-objective references.",
+      "A draft gap-analysis report with evidence citations.",
+      "A reviewer rubric and checks for unsupported conclusions."
+    ]
   }
 ]

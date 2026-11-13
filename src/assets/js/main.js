@@ -28,8 +28,16 @@
     tabs.forEach(b => { const active = b.dataset.f === value; b.classList.toggle('active', active); b.setAttribute('aria-pressed', String(active)); });
     cards.forEach(card => { card.hidden = value !== 'all' && card.dataset.status !== value; });
   };
-  tabs.forEach(btn => btn.addEventListener('click', () => filter(btn.dataset.f)));
-  filter('completed');
+  const readFilter = () => {
+    const value = window.location.hash.slice(1);
+    filter(Array.from(tabs).some(btn => btn.dataset.f === value) ? value : 'all');
+  };
+  tabs.forEach(btn => btn.addEventListener('click', () => {
+    filter(btn.dataset.f);
+    history.replaceState(null, '', '#' + btn.dataset.f);
+  }));
+  window.addEventListener('hashchange', readFilter);
+  readFilter();
 })();
 
 // Mobile nav toggle — hamburger opens/closes the nav links sheet.

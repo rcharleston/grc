@@ -12,7 +12,7 @@ The source for my security portfolio and writing hub, built with **Eleventy 3**,
 | Azure Sentinel honeypot | Telemetry workflow, KQL, original map screenshots | [Open repo](https://github.com/rcharleston/azure-sentinel-honeypot) |
 | Windows Prefetch analysis | Forensic reasoning, observations, PECmd commands | [Open repo](https://github.com/rcharleston/windows-prefetch-analysis) |
 
-Completed labs have a **Documented lab** label. Future GRC ideas are labeled **Concept**. Every completed case study links to its original Medium walkthrough and repository.
+Completed labs have a **Documented lab** label. GRC projects in scope and design are labeled **In progress**, with planned deliverables on their detail pages. The homepage features risk registers, control assessment, and audit evidence; each completed case study links to its original Medium walkthrough and repository.
 
 ## Run locally
 
@@ -38,7 +38,7 @@ src/assets/           Styles, scripts, banners, evidence images
 .github/workflows/    Build and GitHub Pages deployment
 ```
 
-Update `src/_data/projects.json`. Status is `completed` or `concept`; completed work needs an actual repository and source link. Keep claims and metrics traceable to evidence.
+Update `src/_data/projects.json`. Status is `completed` or `in-progress`; completed work needs an actual repository and source link. Use `featuredGrc` to feature an in-progress project on the homepage. Keep claims and metrics traceable to evidence.
 
 ## Publishing
 

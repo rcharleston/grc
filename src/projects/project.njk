@@ -12,10 +12,11 @@ eleventyComputed:
 <article class="section project-detail">
   <a href="/projects/" class="post-back">← All projects</a>
   {% if p.cover %}<img class="case-banner" src="{{ p.cover }}" alt="{{ p.title }}" width="1200" height="320">{% endif %}
-  <div class="dp-eyebrow"><span class="pcard-num">{{ p.category }}</span><span class="diff-badge status-{{ p.status }}">{% if p.status == "completed" %}DOCUMENTED LAB{% else %}CONCEPT{% endif %}</span></div>
+  <div class="dp-eyebrow"><span class="pcard-num">{{ p.category }}</span><span class="diff-badge status-{{ p.status }}">{% if p.status == "completed" %}DOCUMENTED LAB{% else %}IN PROGRESS{% endif %}</span></div>
   <h1 class="dp-title">{{ p.title }}</h1><p class="hero-desc">{{ p.description }}</p>
   {% if p.github %}<div class="case-actions"><a class="btn-primary" href="{{ p.github }}" target="_blank" rel="noopener">Explore the repository ↗</a><a class="btn-ghost" href="{{ p.article }}" target="_blank" rel="noopener">Original walkthrough ↗</a></div>{% endif %}
-  <h2 class="dp-section-label">{% if p.status == "completed" %}The work{% else %}Proposed work{% endif %}</h2><p class="dp-text">{{ p.overview }}</p><p class="dp-text">{{ p.details }}</p>
+  <h2 class="dp-section-label">{% if p.status == "completed" %}The work{% else %}Project scope{% endif %}</h2><p class="dp-text">{{ p.overview }}</p><p class="dp-text">{{ p.details }}</p>
+  {% if p.deliverables.length %}<h2 class="dp-section-label">Planned deliverables</h2><ul class="case-outcomes">{% for item in p.deliverables %}<li>{{ item }}</li>{% endfor %}</ul>{% endif %}
   {% if p.outcomes.length %}<h2 class="dp-section-label">Evidence and outcomes</h2><ul class="case-outcomes">{% for item in p.outcomes %}<li>{{ item }}</li>{% endfor %}</ul>{% endif %}
   {% if p.image %}<figure class="case-evidence"><img src="{{ p.image }}" alt="{{ p.imageAlt }}" width="1100" height="467" loading="lazy"><figcaption>{{ p.imageAlt }}. Source: Roman Charleston's original walkthrough.</figcaption></figure>{% endif %}
   <aside class="scope-note"><h2>Scope &amp; limitations</h2><p>{{ p.limitations }}</p></aside>

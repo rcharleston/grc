@@ -1,11 +1,11 @@
 ---
 layout: layouts/base.njk
 title: Projects
-description: Documented AWS, Azure Sentinel, and Windows forensics labs with source repositories and evidence. Future GRC ideas are labeled as concepts.
+description: Documented security labs and GRC engineering projects in progress, from risk registers and control testing to audit evidence automation.
 permalink: /projects/
 ---
 <section class="section" style="padding-top:140px;">
-  <div class="section-header fade-in"><div class="section-left"><div class="section-tag">// Portfolio</div><h1 class="section-title">Work you can<br><em>inspect.</em></h1></div><p class="section-desc">Three documented labs with source material and clear evidence. GRC roadmap ideas are listed separately as concepts.</p></div>
-  <div class="filter-row" role="group" aria-label="Project status"><button class="ftab active" data-f="completed" aria-pressed="true">Documented labs</button><button class="ftab" data-f="concept" aria-pressed="false">Roadmap concepts</button><button class="ftab" data-f="all" aria-pressed="false">All</button></div>
+  <div class="section-header fade-in"><div class="section-left"><div class="section-tag">// Portfolio</div><h1 class="section-title">Work you can<br><em>inspect.</em></h1></div><p class="section-desc">Three documented security labs, plus GRC engineering projects in progress. Explore the evidence, project scopes, and planned deliverables.</p></div>
+  <div class="filter-row" role="group" aria-label="Project status"><button class="ftab active" data-f="all" aria-pressed="true">All projects</button><button class="ftab" data-f="completed" aria-pressed="false">Documented labs</button><button class="ftab" data-f="in-progress" aria-pressed="false">In progress</button></div>
   <div class="projects-grid">{% for p in projects %}{% include "partials/project-card.njk" %}{% endfor %}</div>
 </section>
